@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import net.sf.ehcache.hibernate.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -28,9 +27,20 @@ public class IfrIdioma extends javax.swing.JInternalFrame {
 
     public IfrIdioma() {
         initComponents();
+        inicia();
+
+    }
+
+    public void popularTabela() {
+
+        // cabecalho da tabela
+        Object[] cabecalho = new Object[2];
+        cabecalho[0] = "Código";
+        cabecalho[1] = "Descrição";
+
         List<Idioma> resultado = new ArrayList();
         String sql = "FROM Idioma "
-                + "ORDER BY id";
+                + "ORDER BY codigo";
         tblIdioma.getColumnModel().getColumn(0).setPreferredWidth(50);
         tblIdioma.getColumnModel().getColumn(1).setPreferredWidth(200);
         DefaultTableModel modelo = (DefaultTableModel) tblIdioma.getModel();
@@ -41,13 +51,22 @@ public class IfrIdioma extends javax.swing.JInternalFrame {
             resultado = query.list();
             for (int i = 0; i < resultado.size(); i++) {
                 Idioma idioma = resultado.get(i);
-                modelo.addRow(new Object[]{idioma.getId(),
-                    idioma.getDescricao()});
+                modelo.addRow(new Object[]{idioma.getCodigo(),
+                    idioma.getIdioma()});
 
             }
         } catch (HibernateException hibEx) {
             hibEx.printStackTrace();
         }
+
+        // permite seleção de apenas uma linha da tabela
+        tblIdioma.setSelectionMode(0);
+    }
+
+    public void inicia() {
+        tfdBuscar.setText("");
+        tfdDescricao.setText("");
+        popularTabela();
     }
 
     /**
@@ -71,7 +90,6 @@ public class IfrIdioma extends javax.swing.JInternalFrame {
         btnBuscar = new javax.swing.JButton();
         btnFechar = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
-        btnEditar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
 
         setTitle("Cadastro de Idiomas");
@@ -103,21 +121,34 @@ public class IfrIdioma extends javax.swing.JInternalFrame {
 
         tblIdioma.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Código", "Descrição"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblIdioma.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblIdiomaMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tblIdioma);
+        if (tblIdioma.getColumnModel().getColumnCount() > 0) {
+            tblIdioma.getColumnModel().getColumn(0).setMaxWidth(100);
+            tblIdioma.getColumnModel().getColumn(1).setMinWidth(400);
+            tblIdioma.getColumnModel().getColumn(1).setMaxWidth(400);
+        }
 
         jLabel2.setText("Buscar");
 
@@ -177,13 +208,6 @@ public class IfrIdioma extends javax.swing.JInternalFrame {
             }
         });
 
-        btnEditar.setText("Editar");
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
-            }
-        });
-
         btnExcluir.setText("Excluir");
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -198,8 +222,6 @@ public class IfrIdioma extends javax.swing.JInternalFrame {
             .addComponent(jTabbedPane1)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnEditar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSalvar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnExcluir)
@@ -211,11 +233,10 @@ public class IfrIdioma extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnFechar)
                     .addComponent(btnSalvar)
-                    .addComponent(btnEditar)
                     .addComponent(btnExcluir))
                 .addContainerGap())
         );
@@ -240,8 +261,8 @@ public class IfrIdioma extends javax.swing.JInternalFrame {
             resultado = query.list();
             for (int i = 0; i < resultado.size(); i++) {
                 Idioma idioma = resultado.get(i);
-                modelo.addRow(new Object[]{idioma.getId(),
-                    idioma.getDescricao()});
+                modelo.addRow(new Object[]{idioma.getCodigo(),
+                    idioma.getIdioma()});
 
             }
         } catch (HibernateException hibEx) {
@@ -250,46 +271,47 @@ public class IfrIdioma extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        Session sessao = null;
-        try {
-            sessao = HibernateUtil.getSessionFactory().openSession();
-            Transaction transacao = sessao.beginTransaction();
-            Idioma idioma = new Idioma();
-            idioma.setDescricao(tfdDescricao.getText());
-            sessao.save(idioma);
-            transacao.commit();
-            JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso!");
-        } catch (HibernateException hibEx) {
-            hibEx.printStackTrace();
-        } finally {
-            sessao.close();
+        if (codigo == 0) {
+            Session sessao = null;
+            try {
+                sessao = HibernateUtil.getSessionFactory().openSession();
+                Transaction transacao = sessao.beginTransaction();
+                Idioma idioma = new Idioma();
+                idioma.setIdioma(tfdDescricao.getText());
+                sessao.save(idioma);
+                transacao.commit();
+                JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso!");
+                inicia();
+            } catch (HibernateException hibEx) {
+                hibEx.printStackTrace();
+            } finally {
+                sessao.close();
+            }
+        } else {
+            List resultado = null;
+            Session sessao = null;
+            try {
+                sessao = HibernateUtil.getSessionFactory().openSession();
+                Transaction transacao = sessao.beginTransaction();
+                int id = codigo;
+
+                org.hibernate.Query query = sessao.createQuery("FROM Idioma WHERE codigo = " + id);
+
+                resultado = query.list();
+                for (Object obj : resultado) {
+                    Idioma idioma = (Idioma) obj;
+                    idioma.setCodigo(id);
+                    idioma.setIdioma(tfdDescricao.getText());
+                    sessao.update(idioma);
+                    transacao.commit();
+                    JOptionPane.showMessageDialog(null, "Cadastro alterado com sucesso!");
+                    inicia();
+                }
+            } catch (HibernateException hibEx) {
+                hibEx.printStackTrace();
+            }
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
-
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        List resultado = null;
-        Session sessao = null;
-        try {
-            sessao = HibernateUtil.getSessionFactory().openSession();
-            Transaction transacao = sessao.beginTransaction();
-            int id;
-            id = Integer.parseInt(JOptionPane.showInputDialog(null, "Código do idioma a ser ALTERADO:", "Editar", JOptionPane.PLAIN_MESSAGE));
-
-            org.hibernate.Query query = sessao.createQuery("FROM Idioma WHERE id = " + id);
-
-            resultado = query.list();
-            for (Object obj : resultado) {
-                Idioma idioma = (Idioma) obj;
-                idioma.setId(id);
-                idioma.setDescricao(tfdDescricao.getText());
-                sessao.update(idioma);
-                transacao.commit();
-                JOptionPane.showMessageDialog(null, "Cadastro alterado com sucesso!");
-            }
-        } catch (HibernateException hibEx) {
-            hibEx.printStackTrace();
-        }
-    }//GEN-LAST:event_btnEditarActionPerformed
 
     private void tblIdiomaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblIdiomaMouseClicked
         String id = String.valueOf(tblIdioma.getValueAt(tblIdioma.getSelectedRow(), 0));
@@ -314,7 +336,7 @@ public class IfrIdioma extends javax.swing.JInternalFrame {
             Transaction transacao = sessao.beginTransaction();
             String id = String.valueOf(tblIdioma.getValueAt(tblIdioma.getSelectedRow(), 0));
 
-            org.hibernate.Query query = sessao.createQuery("FROM Idioma WHERE id = " + id);
+            org.hibernate.Query query = sessao.createQuery("FROM Idioma WHERE codigo = " + id);
 
             resultado = query.list();
             for (Object obj : resultado) {
@@ -331,7 +353,6 @@ public class IfrIdioma extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnFechar;
     private javax.swing.JButton btnSalvar;

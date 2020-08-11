@@ -43,18 +43,26 @@ Contributor(s):
         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property
-            name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        <property name="hibernate.connection.driver_class">mysql</property>
-        <property
-            name="hibernate.connection.url">jdbc:mysql://localhost/cinesystem</property>
+        
+        <property name="hibernate.connection.driver_class">org.gjt.mm.mysql.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost/cinesystem</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">Spsinf</property>
+        <property name="hibernate.connection.pool_size">100</property>
+        <property name="show_sql">false</property>
+        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+    
+<!--        <property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
+        <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+        <property name="hibernate.connection.url">sqlserver://localhost:1433;databaseName=CineSystem;</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password"></property>
+        <property name="show_sql">false</property> -->
+
+  
         
-        <mapping class="CineSystem.Categoria"/>
-        <mapping class="CineSystem.Classificacao"/>
-        <mapping class="CineSystem.Idioma"/>
-        <mapping class="CineSystem.Legenda"/>
-        <mapping class="CineSystem.CineSystem"/>
+        
+        <mapping class="entidades.Idioma"/>
+        <mapping class="telas.IfrIdioma"/>
     </session-factory>
 </hibernate-configuration>

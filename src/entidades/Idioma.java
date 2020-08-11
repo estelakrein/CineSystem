@@ -14,43 +14,45 @@ import javax.persistence.*;
  */
         
 @Entity
-@Table(name = "job")
+@Table(name = "idioma")
 
 public class Idioma implements Serializable{
-    
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
-    @Column(name = "descricao")
-    private String descricao;
+    
+    @Column(name = "codigo")
+    private int codigo;
+    @Column(name = "idioma")
+    private String idioma;
 
     
     /**
      * @return the id
      */
-    public int getId() {
-        return id;
+    public int getCodigo() {
+        return codigo;
     }
 
     /**
-     * @param id the id to set
+     * @param codigo the id to set
      */
-    public void setId(int id) {
-        this.id = id;
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
 
     /**
      * @return the descricao
      */
-    public String getDescricao() {
-        return descricao;
+    public String getIdioma() {
+        return idioma;
     }
 
     /**
      * @param descricao the descricao to set
      */
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setIdioma(String idioma) {
+        this.idioma = idioma;
     }
     
 }
