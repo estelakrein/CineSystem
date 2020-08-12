@@ -1,2 +1,10 @@
 
 nbproject/private/
+
+build/classes/hibernate.cfg.xml
+
+src/META-INF/persistence.xml
+
+src/hibernate.cfg.xml
+
+build/classes/META-INF/persistence.xml
