@@ -67,6 +67,7 @@ public class IfrIdioma extends javax.swing.JInternalFrame {
         tfdBuscar.setText("");
         tfdDescricao.setText("");
         popularTabela();
+        codigo = 0;
     }
 
     /**
@@ -249,8 +250,8 @@ public class IfrIdioma extends javax.swing.JInternalFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         List<Idioma> resultado = new ArrayList();
         String sql = "FROM Idioma "
-                + "WHERE descricao LIKE '%" + tfdBuscar.getText() + "%' "
-                + "ORDER BY id";
+                + "WHERE idioma LIKE '%" + tfdBuscar.getText() + "%' "
+                + "ORDER BY codigo";
         tblIdioma.getColumnModel().getColumn(0).setPreferredWidth(50);
         tblIdioma.getColumnModel().getColumn(1).setPreferredWidth(200);
         DefaultTableModel modelo = (DefaultTableModel) tblIdioma.getModel();

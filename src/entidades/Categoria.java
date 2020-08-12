@@ -5,27 +5,43 @@
  */
 package entidades;
 
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  *
  * @author estel
  */
-public class Categoria {
+@Entity
+@Table(name = "categoria")
+
+public class Categoria implements Serializable{
     
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    
+    @Column(name = "codigo")
+    private int codigo;
+    @Column(name = "descricao")
     private String descricao;
 
     /**
-     * @return the id
+     * @return the codigo
      */
-    public int getId() {
-        return id;
+    public int getCodigo() {
+        return codigo;
     }
 
     /**
-     * @param id the id to set
+     * @param codigo the codigo to set
      */
-    public void setId(int id) {
-        this.id = id;
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
 
     /**
