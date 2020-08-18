@@ -8,19 +8,19 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema cinesystem
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema cinesystem
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `cinesystem` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE `cinesystem` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`Sala`
+-- Table `cinesystem`.`Sala`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Sala` (
+CREATE TABLE IF NOT EXISTS `cinesystem`.`Sala` (
   `Codigo` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `descricao` VARCHAR(45) NULL COMMENT '',
   PRIMARY KEY (`Codigo`)  COMMENT '')
@@ -28,9 +28,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Idioma`
+-- Table `cinesystem`.`Idioma`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Idioma` (
+CREATE TABLE IF NOT EXISTS `cinesystem`.`Idioma` (
   `codigo` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `idioma` VARCHAR(45) NULL COMMENT '',
   PRIMARY KEY (`codigo`)  COMMENT '')
@@ -38,9 +38,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Classificacao`
+-- Table `cinesystem`.`Classificacao`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Classificacao` (
+CREATE TABLE IF NOT EXISTS `cinesystem`.`Classificacao` (
   `codigo` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `descricao` VARCHAR(45) NULL COMMENT '',
   PRIMARY KEY (`codigo`)  COMMENT '')
@@ -48,9 +48,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Categoria`
+-- Table `cinesystem`.`Categoria`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Categoria` (
+CREATE TABLE IF NOT EXISTS `cinesystem`.`Categoria` (
   `codigo` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `descricao` VARCHAR(45) NULL COMMENT '',
   PRIMARY KEY (`codigo`)  COMMENT '')
@@ -58,9 +58,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Legenda`
+-- Table `cinesystem`.`Legenda`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Legenda` (
+CREATE TABLE IF NOT EXISTS `cinesystem`.`Legenda` (
   `codigo` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `descricao` VARCHAR(45) NULL COMMENT '',
   PRIMARY KEY (`codigo`)  COMMENT '')
@@ -68,9 +68,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Filme`
+-- Table `cinesystem`.`Filme`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Filme` (
+CREATE TABLE IF NOT EXISTS `cinesystem`.`Filme` (
   `codigo` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `nome` VARCHAR(250) NULL COMMENT '',
   `duracao` TIME NULL COMMENT '',
@@ -86,31 +86,31 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Filme` (
   INDEX `fk_Filmes_legenda1_idx` (`codLegenda` ASC)  COMMENT '',
   CONSTRAINT `fk_Filmes_Idiomas1`
     FOREIGN KEY (`codIdioma`)
-    REFERENCES `mydb`.`Idioma` (`codigo`)
+    REFERENCES `cinesystem`.`Idioma` (`codigo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Filmes_Classificacao1`
     FOREIGN KEY (`codClassificacao`)
-    REFERENCES `mydb`.`Classificacao` (`codigo`)
+    REFERENCES `cinesystem`.`Classificacao` (`codigo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Filmes_Categoria1`
     FOREIGN KEY (`codCategoria`)
-    REFERENCES `mydb`.`Categoria` (`codigo`)
+    REFERENCES `cinesystem`.`Categoria` (`codigo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Filmes_legenda1`
     FOREIGN KEY (`codLegenda`)
-    REFERENCES `mydb`.`Legenda` (`codigo`)
+    REFERENCES `cinesystem`.`Legenda` (`codigo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Usuario`
+-- Table `cinesystem`.`Usuario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Usuario` (
+CREATE TABLE IF NOT EXISTS `cinesystem`.`Usuario` (
   `Codigo` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `Nome` VARCHAR(250) NULL COMMENT '',
   `cpf` VARCHAR(11) NULL COMMENT '',
@@ -120,9 +120,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Sessao`
+-- Table `cinesystem`.`Sessao`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Sessao` (
+CREATE TABLE IF NOT EXISTS `cinesystem`.`Sessao` (
   `codigo` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `horario` TIME NULL COMMENT '',
   `data` DATE NULL COMMENT '',
@@ -134,21 +134,21 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Sessao` (
   INDEX `fk_Sessao_Filmes1_idx` (`codFilme` ASC)  COMMENT '',
   CONSTRAINT `fk_Sessao_Salas1`
     FOREIGN KEY (`codSala`)
-    REFERENCES `mydb`.`Sala` (`Codigo`)
+    REFERENCES `cinesystem`.`Sala` (`Codigo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Sessao_Filmes1`
     FOREIGN KEY (`codFilme`)
-    REFERENCES `mydb`.`Filme` (`codigo`)
+    REFERENCES `cinesystem`.`Filme` (`codigo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Poltrona`
+-- Table `cinesystem`.`Poltrona`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Poltrona` (
+CREATE TABLE IF NOT EXISTS `cinesystem`.`Poltrona` (
   `codigo` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `codSala` INT NOT NULL COMMENT '',
   `fileira` VARCHAR(1) NULL COMMENT '',
@@ -157,16 +157,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Poltrona` (
   INDEX `fk_Poltronas_Salas1_idx` (`codSala` ASC)  COMMENT '',
   CONSTRAINT `fk_Poltronas_Salas1`
     FOREIGN KEY (`codSala`)
-    REFERENCES `mydb`.`Sala` (`Codigo`)
+    REFERENCES `cinesystem`.`Sala` (`Codigo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Ingresso`
+-- Table `cinesystem`.`Ingresso`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Ingresso` (
+CREATE TABLE IF NOT EXISTS `cinesystem`.`Ingresso` (
   `Codigo` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `codSessao` INT NOT NULL COMMENT '',
   `codPoltrona` INT NOT NULL COMMENT '',
@@ -175,21 +175,21 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Ingresso` (
   INDEX `fk_Ingresso_Poltrona1_idx` (`codPoltrona` ASC)  COMMENT '',
   CONSTRAINT `fk_Ingresso_Sessao1`
     FOREIGN KEY (`codSessao`)
-    REFERENCES `mydb`.`Sessao` (`codigo`)
+    REFERENCES `cinesystem`.`Sessao` (`codigo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Ingresso_Poltrona1`
     FOREIGN KEY (`codPoltrona`)
-    REFERENCES `mydb`.`Poltrona` (`codigo`)
+    REFERENCES `cinesystem`.`Poltrona` (`codigo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Venda`
+-- Table `cinesystem`.`Venda`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Venda` (
+CREATE TABLE IF NOT EXISTS `cinesystem`.`Venda` (
   `numero` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `emissao` DATE NULL COMMENT '',
   `total` DECIMAL(15,4) NULL COMMENT '',
@@ -199,16 +199,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Venda` (
   INDEX `fk_Venda_Usuario1_idx` (`codUsuario` ASC)  COMMENT '',
   CONSTRAINT `fk_Venda_Usuario1`
     FOREIGN KEY (`codUsuario`)
-    REFERENCES `mydb`.`Usuario` (`Codigo`)
+    REFERENCES `cinesystem`.`Usuario` (`Codigo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`IngressoVenda`
+-- Table `cinesystem`.`IngressoVenda`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`IngressoVenda` (
+CREATE TABLE IF NOT EXISTS `cinesystem`.`IngressoVenda` (
   `codVenda` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `codIngresso` INT NOT NULL COMMENT '',
   `valor` DECIMAL(15,4) NULL COMMENT '',
@@ -217,12 +217,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`IngressoVenda` (
   INDEX `fk_Venda_has_Ingresso_Venda1_idx` (`codVenda` ASC)  COMMENT '',
   CONSTRAINT `fk_Venda_has_Ingresso_Venda1`
     FOREIGN KEY (`codVenda`)
-    REFERENCES `mydb`.`Venda` (`numero`)
+    REFERENCES `cinesystem`.`Venda` (`numero`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Venda_has_Ingresso_Ingresso1`
     FOREIGN KEY (`codIngresso`)
-    REFERENCES `mydb`.`Ingresso` (`Codigo`)
+    REFERENCES `cinesystem`.`Ingresso` (`Codigo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
