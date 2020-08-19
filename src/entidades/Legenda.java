@@ -11,7 +11,11 @@ import javax.persistence.Table;
  *
  * @author estel
  */
-public class Legenda {
+        
+@Entity
+@Table(name = "legenda")
+
+public class Legenda implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,16 +26,16 @@ public class Legenda {
     private String descricao;
 
     /**
-     * @return the id
+     * @return the codigo
      */
-    public int getId() {
+    public int getCodigo() {
         return codigo;
     }
 
     /**
-     * @param id the id to set
+     * @param codigo the codigo to set
      */
-    public void setId(int id) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
 
@@ -48,4 +52,6 @@ public class Legenda {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
+    
 }

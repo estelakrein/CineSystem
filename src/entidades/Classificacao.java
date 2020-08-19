@@ -11,27 +11,32 @@ import javax.persistence.Table;
  *
  * @author estel
  */
-public class Classificacao {
+
+        
+@Entity
+@Table(name = "classificacao")
+
+public class Classificacao implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     
     @Column(name = "codigo")
     private int codigo;
-    @Column(name = "classificacao")
+    @Column(name = "descricao")
     private String descricao;
 
     /**
-     * @return the id
+     * @return the codigo
      */
-    public int getId() {
+    public int getCodigo() {
         return codigo;
     }
 
     /**
-     * @param id the id to set
+     * @param codigo the codigo to set
      */
-    public void setId(int id) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
 
@@ -48,5 +53,7 @@ public class Classificacao {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
+    
     
 }

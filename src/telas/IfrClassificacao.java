@@ -31,7 +31,7 @@ public class IfrClassificacao extends javax.swing.JInternalFrame {
         cabecalho[1] = "Descrição";
 
         List<Classificacao> resultado = new ArrayList();
-        String sql = "FROM categoria "
+        String sql = "FROM Classificacao "
                 + "ORDER BY codigo";
         tblClassificacao.getColumnModel().getColumn(0).setPreferredWidth(50);
         tblClassificacao.getColumnModel().getColumn(1).setPreferredWidth(200);
@@ -43,7 +43,7 @@ public class IfrClassificacao extends javax.swing.JInternalFrame {
             resultado = query.list();
             for (int i = 0; i < resultado.size(); i++) {
                 Classificacao classificacao = resultado.get(i);
-                modelo.addRow(new Object[]{classificacao.getId(),
+                modelo.addRow(new Object[]{classificacao.getCodigo(),
                     classificacao.getDescricao()});
 
             }
@@ -128,6 +128,11 @@ public class IfrClassificacao extends javax.swing.JInternalFrame {
                 "Código", "Descrição"
             }
         ));
+        tblClassificacao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblClassificacaoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblClassificacao);
         if (tblClassificacao.getColumnModel().getColumnCount() > 0) {
             tblClassificacao.getColumnModel().getColumn(0).setMinWidth(100);
@@ -230,7 +235,7 @@ public class IfrClassificacao extends javax.swing.JInternalFrame {
             Transaction transacao = sessao.beginTransaction();
             String id = String.valueOf(tblClassificacao.getValueAt(tblClassificacao.getSelectedRow(), 0));
 
-            org.hibernate.Query query = sessao.createQuery("FROM classificacao WHERE codigo = " + id);
+            org.hibernate.Query query = sessao.createQuery("FROM Classificacao WHERE codigo = " + id);
 
             resultado = query.list();
             for (Object obj : resultado) {
@@ -270,12 +275,12 @@ public class IfrClassificacao extends javax.swing.JInternalFrame {
                 Transaction transacao = sessao.beginTransaction();
                 int id = codigo;
 
-                org.hibernate.Query query = sessao.createQuery("FROM classificacao WHERE codigo = " + id);
+                org.hibernate.Query query = sessao.createQuery("FROM Classificacao WHERE codigo = " + id);
 
                 resultado = query.list();
                 for (Object obj : resultado) {
                     Classificacao classificacao = (Classificacao) obj;
-                    classificacao.setId(id);
+                    classificacao.setCodigo(id);
                     classificacao.setDescricao(tfdDescricao.getText());
                     sessao.update(classificacao);
                     transacao.commit();
@@ -287,6 +292,17 @@ public class IfrClassificacao extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void tblClassificacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClassificacaoMouseClicked
+        String id = String.valueOf(tblClassificacao.getValueAt(tblClassificacao.getSelectedRow(), 0));
+        String descricao = String.valueOf(tblClassificacao.getValueAt(tblClassificacao.getSelectedRow(), 1));
+
+        codigo = Integer.parseInt(id);
+
+        tfdDescricao.setText(descricao);
+        jTabbedPane1.setSelectedIndex(0);
+        tfdDescricao.requestFocus();
+    }//GEN-LAST:event_tblClassificacaoMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

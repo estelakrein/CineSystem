@@ -38,7 +38,7 @@ public class IfrCategoria extends javax.swing.JInternalFrame {
         cabecalho[1] = "Descrição";
 
         List<Categoria> resultado = new ArrayList();
-        String sql = "FROM categoria "
+        String sql = "FROM Categoria "
                 + "ORDER BY codigo";
         tblCategoria.getColumnModel().getColumn(0).setPreferredWidth(50);
         tblCategoria.getColumnModel().getColumn(1).setPreferredWidth(200);
@@ -288,7 +288,7 @@ public class IfrCategoria extends javax.swing.JInternalFrame {
                 Transaction transacao = sessao.beginTransaction();
                 int id = codigo;
 
-                org.hibernate.Query query = sessao.createQuery("FROM Idioma WHERE codigo = " + id);
+                org.hibernate.Query query = sessao.createQuery("FROM Categoria WHERE codigo = " + id);
 
                 resultado = query.list();
                 for (Object obj : resultado) {

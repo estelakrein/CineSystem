@@ -1,5 +1,6 @@
 package telas;
 
+
 import entidades.Legenda;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 /**
  *
  * @author Acer
@@ -15,6 +17,7 @@ import org.hibernate.Transaction;
 public class IfrLegenda extends javax.swing.JInternalFrame {
 
     int codigo = 0;
+
     /**
      * Creates new form IfrLegenda
      */
@@ -22,7 +25,7 @@ public class IfrLegenda extends javax.swing.JInternalFrame {
         initComponents();
         inicia();
     }
-    
+
     public void popularTabela() {
 
         // cabecalho da tabela
@@ -31,7 +34,7 @@ public class IfrLegenda extends javax.swing.JInternalFrame {
         cabecalho[1] = "Descrição";
 
         List<Legenda> resultado = new ArrayList();
-        String sql = "FROM legenda "
+        String sql = "FROM Legenda "
                 + "ORDER BY codigo";
         tblLegenda.getColumnModel().getColumn(0).setPreferredWidth(50);
         tblLegenda.getColumnModel().getColumn(1).setPreferredWidth(200);
@@ -43,7 +46,7 @@ public class IfrLegenda extends javax.swing.JInternalFrame {
             resultado = query.list();
             for (int i = 0; i < resultado.size(); i++) {
                 Legenda legenda = resultado.get(i);
-                modelo.addRow(new Object[]{legenda.getId(),
+                modelo.addRow(new Object[]{legenda.getCodigo(),
                     legenda.getDescricao()});
 
             }
@@ -235,7 +238,7 @@ public class IfrLegenda extends javax.swing.JInternalFrame {
             Transaction transacao = sessao.beginTransaction();
             String id = String.valueOf(tblLegenda.getValueAt(tblLegenda.getSelectedRow(), 0));
 
-            org.hibernate.Query query = sessao.createQuery("FROM legenda WHERE codigo = " + id);
+            org.hibernate.Query query = sessao.createQuery("FROM Legenda WHERE codigo = " + id);
 
             resultado = query.list();
             for (Object obj : resultado) {
@@ -250,7 +253,6 @@ public class IfrLegenda extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-
         if (codigo == 0) {
             Session sessao = null;
             try {
@@ -275,12 +277,12 @@ public class IfrLegenda extends javax.swing.JInternalFrame {
                 Transaction transacao = sessao.beginTransaction();
                 int id = codigo;
 
-                org.hibernate.Query query = sessao.createQuery("FROM legenda WHERE codigo = " + id);
+                org.hibernate.Query query = sessao.createQuery("FROM Legenda WHERE codigo = " + id);
 
                 resultado = query.list();
                 for (Object obj : resultado) {
                     Legenda legenda = (Legenda) obj;
-                    legenda.setId(id);
+                    legenda.setCodigo(id);
                     legenda.setDescricao(tfdDescricao.getText());
                     sessao.update(legenda);
                     transacao.commit();
@@ -296,9 +298,9 @@ public class IfrLegenda extends javax.swing.JInternalFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 
         List<Legenda> resultado = new ArrayList();
-        String sql = "FROM legenda "
-        + "WHERE descricao LIKE '%" + tfdBuscar.getText() + "%' "
-        + "ORDER BY codigo";
+        String sql = "FROM Legenda "
+                + "WHERE descricao LIKE '%" + tfdBuscar.getText() + "%' "
+                + "ORDER BY codigo";
         tblLegenda.getColumnModel().getColumn(0).setPreferredWidth(50);
         tblLegenda.getColumnModel().getColumn(1).setPreferredWidth(200);
         DefaultTableModel modelo = (DefaultTableModel) tblLegenda.getModel();
@@ -309,10 +311,10 @@ public class IfrLegenda extends javax.swing.JInternalFrame {
             resultado = query.list();
             for (int i = 0; i < resultado.size(); i++) {
                 Legenda legenda = resultado.get(i);
-                modelo.addRow(new Object[]{legenda.getId(),
+                modelo.addRow(new Object[]{legenda.getCodigo(),
                     legenda.getDescricao()});
 
-        }
+            }
         } catch (HibernateException hibEx) {
             hibEx.printStackTrace();
         }
