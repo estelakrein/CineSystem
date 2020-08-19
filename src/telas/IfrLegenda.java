@@ -1,6 +1,6 @@
 package telas;
 
-import entidades.Classificacao;
+import entidades.Legenda;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -10,15 +10,15 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 /**
  *
- * @author estel
+ * @author Acer
  */
-public class IfrClassificacao extends javax.swing.JInternalFrame {
+public class IfrLegenda extends javax.swing.JInternalFrame {
 
     int codigo = 0;
     /**
-     * Creates new form IfrClassificacao
+     * Creates new form IfrLegenda
      */
-    public IfrClassificacao() {
+    public IfrLegenda() {
         initComponents();
         inicia();
     }
@@ -30,21 +30,21 @@ public class IfrClassificacao extends javax.swing.JInternalFrame {
         cabecalho[0] = "Código";
         cabecalho[1] = "Descrição";
 
-        List<Classificacao> resultado = new ArrayList();
-        String sql = "FROM categoria "
+        List<Legenda> resultado = new ArrayList();
+        String sql = "FROM legenda "
                 + "ORDER BY codigo";
-        tblClassificacao.getColumnModel().getColumn(0).setPreferredWidth(50);
-        tblClassificacao.getColumnModel().getColumn(1).setPreferredWidth(200);
-        DefaultTableModel modelo = (DefaultTableModel) tblClassificacao.getModel();
+        tblLegenda.getColumnModel().getColumn(0).setPreferredWidth(50);
+        tblLegenda.getColumnModel().getColumn(1).setPreferredWidth(200);
+        DefaultTableModel modelo = (DefaultTableModel) tblLegenda.getModel();
         modelo.setNumRows(0);
         try {
             Session sessao = HibernateUtil.getSessionFactory().openSession();
             org.hibernate.Query query = sessao.createQuery(sql);
             resultado = query.list();
             for (int i = 0; i < resultado.size(); i++) {
-                Classificacao classificacao = resultado.get(i);
-                modelo.addRow(new Object[]{classificacao.getId(),
-                    classificacao.getDescricao()});
+                Legenda legenda = resultado.get(i);
+                modelo.addRow(new Object[]{legenda.getId(),
+                    legenda.getDescricao()});
 
             }
         } catch (HibernateException hibEx) {
@@ -52,7 +52,7 @@ public class IfrClassificacao extends javax.swing.JInternalFrame {
         }
 
         // permite seleção de apenas uma linha da tabela
-        tblClassificacao.setSelectionMode(0);
+        tblLegenda.setSelectionMode(0);
     }
 
     public void inicia() {
@@ -71,53 +71,58 @@ public class IfrClassificacao extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jToggleButton1 = new javax.swing.JToggleButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        tfdDescricao = new javax.swing.JTextField();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        tfdDescricao = new javax.swing.JTextField();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         tfdBuscar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblClassificacao = new javax.swing.JTable();
+        tblLegenda = new javax.swing.JTable();
         btnFechar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
 
-        jToggleButton1.setText("jToggleButton1");
+        setTitle("Cadastro de Legendas");
 
-        jLabel1.setText("Descrição");
+        jLabel2.setText("Descrição");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tfdDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(55, Short.MAX_VALUE))
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(tfdDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfdDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addContainerGap(179, Short.MAX_VALUE))
+                    .addComponent(jLabel2))
+                .addContainerGap(194, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Cadastro", jPanel1);
+        jTabbedPane2.addTab("Cadastro", jPanel2);
 
-        jLabel2.setText("Buscar");
+        jLabel1.setText("Buscar");
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
-        tblClassificacao.setModel(new javax.swing.table.DefaultTableModel(
+        tblLegenda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -128,45 +133,45 @@ public class IfrClassificacao extends javax.swing.JInternalFrame {
                 "Código", "Descrição"
             }
         ));
-        jScrollPane1.setViewportView(tblClassificacao);
-        if (tblClassificacao.getColumnModel().getColumnCount() > 0) {
-            tblClassificacao.getColumnModel().getColumn(0).setMinWidth(100);
-            tblClassificacao.getColumnModel().getColumn(0).setMaxWidth(100);
-            tblClassificacao.getColumnModel().getColumn(1).setMinWidth(200);
-            tblClassificacao.getColumnModel().getColumn(1).setMaxWidth(320);
-        }
+        tblLegenda.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblLegendaMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblLegenda);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(tfdBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tfdBuscar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnBuscar)))
-                .addContainerGap())
+                        .addComponent(btnBuscar)
+                        .addGap(18, 18, 18))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(tfdBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnBuscar))
-                    .addComponent(jLabel2))
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(tfdBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Listagem", jPanel2);
+        jTabbedPane2.addTab("Listagem", jPanel3);
 
         btnFechar.setText("Fechar");
         btnFechar.addActionListener(new java.awt.event.ActionListener() {
@@ -193,7 +198,7 @@ public class IfrClassificacao extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(jTabbedPane2)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSalvar)
@@ -206,13 +211,13 @@ public class IfrClassificacao extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnFechar)
                     .addComponent(btnExcluir)
                     .addComponent(btnSalvar))
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(0, 21, Short.MAX_VALUE))
         );
 
         pack();
@@ -228,14 +233,14 @@ public class IfrClassificacao extends javax.swing.JInternalFrame {
         try {
             sessao = HibernateUtil.getSessionFactory().openSession();
             Transaction transacao = sessao.beginTransaction();
-            String id = String.valueOf(tblClassificacao.getValueAt(tblClassificacao.getSelectedRow(), 0));
+            String id = String.valueOf(tblLegenda.getValueAt(tblLegenda.getSelectedRow(), 0));
 
-            org.hibernate.Query query = sessao.createQuery("FROM classificacao WHERE codigo = " + id);
+            org.hibernate.Query query = sessao.createQuery("FROM legenda WHERE codigo = " + id);
 
             resultado = query.list();
             for (Object obj : resultado) {
-                Classificacao classificacao = (Classificacao) obj;
-                sessao.delete(classificacao);
+                Legenda legenda = (Legenda) obj;
+                sessao.delete(legenda);
                 transacao.commit();
                 JOptionPane.showMessageDialog(null, "Cadastro excluído com sucesso!");
             }
@@ -251,9 +256,9 @@ public class IfrClassificacao extends javax.swing.JInternalFrame {
             try {
                 sessao = HibernateUtil.getSessionFactory().openSession();
                 Transaction transacao = sessao.beginTransaction();
-                Classificacao classificacao = new Classificacao();
-                classificacao.setDescricao(tfdDescricao.getText());
-                sessao.save(classificacao);
+                Legenda legenda = new Legenda();
+                legenda.setDescricao(tfdDescricao.getText());
+                sessao.save(legenda);
                 transacao.commit();
                 JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso!");
                 inicia();
@@ -270,14 +275,14 @@ public class IfrClassificacao extends javax.swing.JInternalFrame {
                 Transaction transacao = sessao.beginTransaction();
                 int id = codigo;
 
-                org.hibernate.Query query = sessao.createQuery("FROM classificacao WHERE codigo = " + id);
+                org.hibernate.Query query = sessao.createQuery("FROM legenda WHERE codigo = " + id);
 
                 resultado = query.list();
                 for (Object obj : resultado) {
-                    Classificacao classificacao = (Classificacao) obj;
-                    classificacao.setId(id);
-                    classificacao.setDescricao(tfdDescricao.getText());
-                    sessao.update(classificacao);
+                    Legenda legenda = (Legenda) obj;
+                    legenda.setId(id);
+                    legenda.setDescricao(tfdDescricao.getText());
+                    sessao.update(legenda);
                     transacao.commit();
                     JOptionPane.showMessageDialog(null, "Cadastro alterado com sucesso!");
                     inicia();
@@ -288,6 +293,43 @@ public class IfrClassificacao extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+
+        List<Legenda> resultado = new ArrayList();
+        String sql = "FROM legenda "
+        + "WHERE descricao LIKE '%" + tfdBuscar.getText() + "%' "
+        + "ORDER BY codigo";
+        tblLegenda.getColumnModel().getColumn(0).setPreferredWidth(50);
+        tblLegenda.getColumnModel().getColumn(1).setPreferredWidth(200);
+        DefaultTableModel modelo = (DefaultTableModel) tblLegenda.getModel();
+        modelo.setNumRows(0);
+        try {
+            Session sessao = HibernateUtil.getSessionFactory().openSession();
+            org.hibernate.Query query = sessao.createQuery(sql);
+            resultado = query.list();
+            for (int i = 0; i < resultado.size(); i++) {
+                Legenda legenda = resultado.get(i);
+                modelo.addRow(new Object[]{legenda.getId(),
+                    legenda.getDescricao()});
+
+        }
+        } catch (HibernateException hibEx) {
+            hibEx.printStackTrace();
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void tblLegendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblLegendaMouseClicked
+
+        String id = String.valueOf(tblLegenda.getValueAt(tblLegenda.getSelectedRow(), 0));
+        String descricao = String.valueOf(tblLegenda.getValueAt(tblLegenda.getSelectedRow(), 1));
+
+        codigo = Integer.parseInt(id);
+
+        tfdDescricao.setText(descricao);
+        jTabbedPane1.setSelectedIndex(0);
+        tfdDescricao.requestFocus();
+    }//GEN-LAST:event_tblLegendaMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
@@ -296,12 +338,12 @@ public class IfrClassificacao extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JTable tblClassificacao;
+    private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTable tblLegenda;
     private javax.swing.JTextField tfdBuscar;
     private javax.swing.JTextField tfdDescricao;
     // End of variables declaration//GEN-END:variables
