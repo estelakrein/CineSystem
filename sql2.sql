@@ -73,7 +73,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `cinesystem`.`Filme` (
   `codigo` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `nome` VARCHAR(250) NULL COMMENT '',
-  `duracao` TIME NULL COMMENT '',
+  `duracao` INT NULL COMMENT '',
   `valor` DECIMAL(15,4) NULL COMMENT '',
   `codIdioma` INT NOT NULL COMMENT '',
   `codClassificacao` INT NOT NULL COMMENT '',

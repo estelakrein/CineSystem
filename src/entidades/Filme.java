@@ -10,11 +10,16 @@ import entidades.Categoria;
 import entidades.Classificacao;
 import entidades.Idioma;
 import entidades.Legenda;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  *
  * @author Acer
  */
+@Entity
+@Table(name = "filme")
+
 public class Filme implements Serializable {
     
     @Id
