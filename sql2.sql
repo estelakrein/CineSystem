@@ -125,7 +125,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `cinesystem`.`Sessao` (
   `codigo` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `horario` TIME NULL COMMENT '',
-  `data` DATE NULL COMMENT '',
+  `dia` DATE NULL COMMENT '',
   `valor` DECIMAL(15,4) NULL COMMENT '',
   `codSala` INT NOT NULL COMMENT '',
   `codFilme` INT NOT NULL COMMENT '',
