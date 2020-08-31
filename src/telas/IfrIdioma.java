@@ -6,6 +6,7 @@
 package telas;
 
 import entidades.Idioma;
+import daos.DaoGenerico;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -273,20 +274,14 @@ public class IfrIdioma extends javax.swing.JInternalFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         if (codigo == 0) {
-            Session sessao = null;
             try {
-                sessao = HibernateUtil.getSessionFactory().openSession();
-                Transaction transacao = sessao.beginTransaction();
                 Idioma idioma = new Idioma();
                 idioma.setIdioma(tfdDescricao.getText());
-                sessao.save(idioma);
-                transacao.commit();
+                DaoGenerico.getInstance().insert(idioma);
                 JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso!");
                 inicia();
             } catch (HibernateException hibEx) {
                 hibEx.printStackTrace();
-            } finally {
-                sessao.close();
             }
         } else {
             List resultado = null;

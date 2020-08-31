@@ -1,5 +1,6 @@
 package telas;
 
+import daos.DaoGenerico;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -42,7 +43,7 @@ public class IfrFilme extends javax.swing.JInternalFrame {
         cabecalho[7] = "Legenda";
 
         List<Filme> resultado = new ArrayList();
-        String sql = "FROM filme "
+        String sql = "FROM Filme "
                 + "ORDER BY codigo";
         tblFilme.getColumnModel().getColumn(0).setPreferredWidth(50);
         tblFilme.getColumnModel().getColumn(1).setPreferredWidth(50);
@@ -61,7 +62,7 @@ public class IfrFilme extends javax.swing.JInternalFrame {
             for (int i = 0; i < resultado.size(); i++) {
                 Filme filme = resultado.get(i);
                 modelo.addRow(new Object[]{filme.getCodigo(),
-                    filme.getNome()});
+                    filme.getNome(), filme.getDuracao(), filme.getDuracao(), filme.getIdioma().getIdioma(), filme.getClassificacao().getDescricao(),  filme.getCategoria().getDescricao(), filme.getLegenda().getDescricao()});
 
             }
         } catch (HibernateException hibEx) {
@@ -355,10 +356,7 @@ public class IfrFilme extends javax.swing.JInternalFrame {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
 
         if (codigo == 0) {
-            Session sessao = null;
             try {
-                sessao = HibernateUtil.getSessionFactory().openSession();
-                Transaction transacao = sessao.beginTransaction();
                 Filme filme = new Filme();
                 filme.setNome(tfdNome.getText());
                 filme.setNome(tfdNome.getText());
@@ -367,14 +365,11 @@ public class IfrFilme extends javax.swing.JInternalFrame {
                 filme.setNome(tfdNome.getText());
                 filme.setNome(tfdNome.getText());
                 filme.setNome(tfdNome.getText());
-                sessao.save(filme);
-                transacao.commit();
+                DaoGenerico.getInstance().insert(filme);
                 JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso!");
                 inicia();
             } catch (HibernateException hibEx) {
                 hibEx.printStackTrace();
-            } finally {
-                sessao.close();
             }
         } else {
             List resultado = null;

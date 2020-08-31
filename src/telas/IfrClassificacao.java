@@ -1,5 +1,6 @@
 package telas;
 
+import daos.DaoGenerico;
 import entidades.Classificacao;
 import java.util.ArrayList;
 import java.util.List;
@@ -252,20 +253,14 @@ public class IfrClassificacao extends javax.swing.JInternalFrame {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
 
         if (codigo == 0) {
-            Session sessao = null;
             try {
-                sessao = HibernateUtil.getSessionFactory().openSession();
-                Transaction transacao = sessao.beginTransaction();
                 Classificacao classificacao = new Classificacao();
-                classificacao.setDescricao(tfdDescricao.getText());
-                sessao.save(classificacao);
-                transacao.commit();
+                classificacao.setDescricao(tfdDescricao.getText());                
                 JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso!");
+                DaoGenerico.getInstance().insert(classificacao);
                 inicia();
             } catch (HibernateException hibEx) {
                 hibEx.printStackTrace();
-            } finally {
-                sessao.close();
             }
         } else {
             List resultado = null;
