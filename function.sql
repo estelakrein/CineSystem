@@ -42,8 +42,27 @@ CALL verValor(4);
 DROP PROCEDURE verValor;
 
 
+delimiter $$									
+create procedure verIdiomas(opcao integer)
 
+begin
 
+    if opcao = 0 then
+        select * from filme where codIdioma = 1;
+    else
+        if opcao = 1 then
+          select * from filme where codIdioma = 2;
+        else
+          select * from filme;
+        end if;
+    end if;
+ end $$
+
+delimiter ;
+
+DROP PROCEDURE verLegendas;
+
+CALL verIdiomas(1);
 
 
 
