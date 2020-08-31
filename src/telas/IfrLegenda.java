@@ -1,6 +1,7 @@
 package telas;
 
 
+import daos.DaoGenerico;
 import entidades.Legenda;
 import java.util.ArrayList;
 import java.util.List;
@@ -254,20 +255,14 @@ public class IfrLegenda extends javax.swing.JInternalFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         if (codigo == 0) {
-            Session sessao = null;
             try {
-                sessao = HibernateUtil.getSessionFactory().openSession();
-                Transaction transacao = sessao.beginTransaction();
                 Legenda legenda = new Legenda();
                 legenda.setDescricao(tfdDescricao.getText());
-                sessao.save(legenda);
-                transacao.commit();
+                DaoGenerico.getInstance().insert(legenda);
                 JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso!");
                 inicia();
             } catch (HibernateException hibEx) {
                 hibEx.printStackTrace();
-            } finally {
-                sessao.close();
             }
         } else {
             List resultado = null;

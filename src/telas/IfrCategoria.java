@@ -5,6 +5,7 @@
  */
 package telas;
 
+import daos.DaoGenerico;
 import entidades.Categoria;
 import java.util.ArrayList;
 import java.util.List;
@@ -265,20 +266,14 @@ public class IfrCategoria extends javax.swing.JInternalFrame {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
 
         if (codigo == 0) {
-            Session sessao = null;
             try {
-                sessao = HibernateUtil.getSessionFactory().openSession();
-                Transaction transacao = sessao.beginTransaction();
                 Categoria categoria = new Categoria();
                 categoria.setDescricao(tfdDescricao.getText());
-                sessao.save(categoria);
-                transacao.commit();
+                DaoGenerico.getInstance().insert(categoria);
                 JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso!");
                 inicia();
             } catch (HibernateException hibEx) {
                 hibEx.printStackTrace();
-            } finally {
-                sessao.close();
             }
         } else {
             List resultado = null;
