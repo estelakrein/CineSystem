@@ -33,6 +33,8 @@ public class Usuario {
     private String cpf;
     @Column(name = "permissoes")
     private String permissoes;
+    @Column(name = "senha")
+    private String senha;
 
  
     @Override
@@ -94,6 +96,20 @@ public class Usuario {
      */
     public void setPermissoes(String permissoes) {
         this.permissoes = permissoes;
+    }
+
+    /**
+     * @return the senha
+     */
+    public String getSenha() {
+        return senha;
+    }
+
+    /**
+     * @param senha the senha to set
+     */
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
     
 }

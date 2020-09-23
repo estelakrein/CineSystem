@@ -5,12 +5,16 @@
  */
 package telas;
 
+import entidades.Usuario;
+
 /**
  *
  * @author estel
  */
 public class FrmPrincipal extends javax.swing.JFrame {
 
+    
+    private Usuario usuarios;
     /**
      * Creates new form FrmPrincipal
      */
@@ -19,6 +23,16 @@ public class FrmPrincipal extends javax.swing.JFrame {
         this.setExtendedState(MAXIMIZED_BOTH);
     }
 
+    public FrmPrincipal(Usuario usuario) {
+        initComponents();
+        this.setTitle("CineSystem");
+        this.setExtendedState(MAXIMIZED_BOTH);
+        usuarios = usuario;
+        if ("U".equals(usuarios.getPermissoes())) {
+            jMenu1.setEnabled(false);
+            jMenu3.setEnabled(false);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,6 +52,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
@@ -114,6 +129,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem8);
+
+        jMenuItem11.setText("Usuários");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem11);
 
         jMenuBar1.add(jMenu1);
 
@@ -206,6 +229,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
         ifrSessao.setVisible(true);
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        IfrUsuario ifrUsuario = new IfrUsuario();
+        jDesktopPane1.add(ifrUsuario);
+        ifrUsuario.setVisible(true);
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -249,6 +278,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

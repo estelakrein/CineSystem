@@ -5,8 +5,15 @@
  */
 package telas;
 
+import daos.DaoUsuario;
+import entidades.Idioma;
 import entidades.Usuario;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 
 /**
  *
@@ -14,7 +21,7 @@ import javax.swing.JOptionPane;
  */
 public class FrmLogin extends javax.swing.JFrame {
 
-    private Usuario usuarios;
+    public Usuario usuarios;
 
     /**
      * Creates new form FrmLogin
@@ -24,8 +31,9 @@ public class FrmLogin extends javax.swing.JFrame {
         usuarios = usuario;
         this.setTitle("Login");
     }
+
     public FrmLogin() {
-        initComponents(); 
+        initComponents();
     }
 
     /**
@@ -106,16 +114,17 @@ public class FrmLogin extends javax.swing.JFrame {
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
 
-//        char[] charSenha = pfdSenha.getPassword();
-//        String senha = new String(charSenha);
-//        usuariosDAO.consulta(usuarios, tfdUsuario.getText(), senha);
-//        if () {
-//            transporte.Transporte.login(usuarios);
-//            this.dispose();
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos");
-//            tfdUsuario.requestFocus();
-//        }
+        char[] charSenha = pfdSenha.getPassword();
+        String senha = new String(charSenha);
+        DaoUsuario daoUsuario = new DaoUsuario();
+        daoUsuario.consulta(usuarios, tfdUsuario.getText(), senha);
+        if ("A".equals(usuarios.getPermissoes()) || ("U".equals(usuarios.getPermissoes()))) {
+            cineSystem.CineSystem.login(usuarios);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos");
+            tfdUsuario.requestFocus();
+        }
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     /**
