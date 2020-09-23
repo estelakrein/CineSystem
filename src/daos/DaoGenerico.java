@@ -37,7 +37,7 @@ public class DaoGenerico {
         Session sessao = factory.openSession();
         try{
             transaction = sessao.beginTransaction();
-            sessao.save(o);
+            sessao.saveOrUpdate(o);
             transaction.commit();
             retorno = true;
         } catch (Exception e){
@@ -49,4 +49,5 @@ public class DaoGenerico {
         }
         return retorno;
     }
+    
 }

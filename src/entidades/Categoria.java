@@ -30,6 +30,11 @@ public class Categoria implements Serializable{
     @Column(name = "descricao")
     private String descricao;
 
+    @Override
+    public String toString(){
+        return this.descricao;
+    }
+    
     /**
      * @return the codigo
      */

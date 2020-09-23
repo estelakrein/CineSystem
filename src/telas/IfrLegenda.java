@@ -251,43 +251,21 @@ public class IfrLegenda extends javax.swing.JInternalFrame {
         } catch (HibernateException hibEx) {
             hibEx.printStackTrace();
         }
+        inicia();
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if (codigo == 0) {
+       
             try {
                 Legenda legenda = new Legenda();
+                legenda.setCodigo(codigo);
                 legenda.setDescricao(tfdDescricao.getText());
                 DaoGenerico.getInstance().insert(legenda);
-                JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso!");
+                JOptionPane.showMessageDialog(null, "Cadastro finalizado com sucesso!");
                 inicia();
             } catch (HibernateException hibEx) {
                 hibEx.printStackTrace();
-            }
-        } else {
-            List resultado = null;
-            Session sessao = null;
-            try {
-                sessao = HibernateUtil.getSessionFactory().openSession();
-                Transaction transacao = sessao.beginTransaction();
-                int id = codigo;
-
-                org.hibernate.Query query = sessao.createQuery("FROM Legenda WHERE codigo = " + id);
-
-                resultado = query.list();
-                for (Object obj : resultado) {
-                    Legenda legenda = (Legenda) obj;
-                    legenda.setCodigo(id);
-                    legenda.setDescricao(tfdDescricao.getText());
-                    sessao.update(legenda);
-                    transacao.commit();
-                    JOptionPane.showMessageDialog(null, "Cadastro alterado com sucesso!");
-                    inicia();
-                }
-            } catch (HibernateException hibEx) {
-                hibEx.printStackTrace();
-            }
-        }
+            }       
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -323,7 +301,7 @@ public class IfrLegenda extends javax.swing.JInternalFrame {
         codigo = Integer.parseInt(id);
 
         tfdDescricao.setText(descricao);
-        jTabbedPane1.setSelectedIndex(0);
+        jTabbedPane2.setSelectedIndex(0);
         tfdDescricao.requestFocus();
     }//GEN-LAST:event_tblLegendaMouseClicked
 

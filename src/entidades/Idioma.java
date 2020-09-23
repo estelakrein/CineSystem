@@ -31,6 +31,11 @@ public class Idioma implements Serializable{
     @Column(name = "idioma")
     private String idioma;
 
+ 
+    @Override
+    public String toString(){
+        return this.idioma;
+    }
     
     /**
      * @return the id

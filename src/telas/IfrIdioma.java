@@ -31,7 +31,7 @@ public class IfrIdioma extends javax.swing.JInternalFrame {
         inicia();
 
     }
-
+    
     public void popularTabela() {
 
         // cabecalho da tabela
@@ -273,40 +273,16 @@ public class IfrIdioma extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if (codigo == 0) {
             try {
                 Idioma idioma = new Idioma();
+                idioma.setCodigo(codigo);
                 idioma.setIdioma(tfdDescricao.getText());
                 DaoGenerico.getInstance().insert(idioma);
-                JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso!");
+                JOptionPane.showMessageDialog(null, "Cadastro finalizado com sucesso!");
                 inicia();
             } catch (HibernateException hibEx) {
                 hibEx.printStackTrace();
             }
-        } else {
-            List resultado = null;
-            Session sessao = null;
-            try {
-                sessao = HibernateUtil.getSessionFactory().openSession();
-                Transaction transacao = sessao.beginTransaction();
-                int id = codigo;
-
-                org.hibernate.Query query = sessao.createQuery("FROM Idioma WHERE codigo = " + id);
-
-                resultado = query.list();
-                for (Object obj : resultado) {
-                    Idioma idioma = (Idioma) obj;
-                    idioma.setCodigo(id);
-                    idioma.setIdioma(tfdDescricao.getText());
-                    sessao.update(idioma);
-                    transacao.commit();
-                    JOptionPane.showMessageDialog(null, "Cadastro alterado com sucesso!");
-                    inicia();
-                }
-            } catch (HibernateException hibEx) {
-                hibEx.printStackTrace();
-            }
-        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void tblIdiomaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblIdiomaMouseClicked
@@ -344,6 +320,7 @@ public class IfrIdioma extends javax.swing.JInternalFrame {
         } catch (HibernateException hibEx) {
             hibEx.printStackTrace();
         }
+        inicia();
     }//GEN-LAST:event_btnExcluirActionPerformed
 
 
