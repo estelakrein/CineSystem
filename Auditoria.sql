@@ -1,62 +1,62 @@
 DESENVOLVIMENTO TABELA DE AUDITORIA:
 
 create table auditoria_log (  
-      log_id int auto_increment primary key,  	--1 para essa tabela
-      new_id int,  								--1 para todas as tabelas 
-      old_id int,  								--1 para todas as tabelas 
-	  new_codigo int,  							--1 para todas as tabelas 
-      old_codigo int,  							--1 para todas as tabelas 
-      new_dia datetime,  						--para as tabelas que possuem data
-      old_dia datetime, 						--para as tabelas que possuem data
-      new_valor DECIMAL(15,4),					--para as tabelas que possuem valores 	  
-      old_valor DECIMAL(15,4),  				--para as tabelas que possuem valores
-	  new_idioma varchar(50),					--para as tabelas que possuem idioma
-	  old_idioma varchar(50),					--para as tabelas que possuem idioma
-	  new_descricao varchar(150),				--para as tabelas que possuem descricao
-	  old_descricao varchar(150),				--para as tabelas que possuem descricao
-	  new_nome varchar(250),					--para as tabelas que possuem nome
-	  old_nome varchar(250),					--para as tabelas que possuem nome
-	  new_codIdioma int,						--para as tabelas que possuem idioma
-	  old_codIdioma int,						--para as tabelas que possuem idioma
-	  new_codClassificacao int,					--para as tabelas que possuem classificação
-	  old_codClassificacao int,					--para as tabelas que possuem classificação
-	  new_codLegenda int,						--para as tabelas que possuem legenda
-	  old_codLegenda int,						--para as tabelas que possuem legenda
-	  new_codCategoria int,						--para as tabelas que possuem categoria
-	  old_codCategoria int,						--para as tabelas que possuem categoria
-	  new_cpf varchar(11),						--para as tabelas que possuem cpf
-	  old_cpf varchar(11),						--para as tabelas que possuem cpf
-	  new_permissoes varchar(5),				--para as tabelas que possuem permissoes
-	  old_permissoes varchar(5),				--para as tabelas que possuem permissoes
-	  new_horario time,							--para as tabelas que possuem horario
-	  old_horario time,							--para as tabelas que possuem horario
-	  new_codSala int,							--para as tabelas que possuem codigo da sala
-	  old_codSala int,							--para as tabelas que possuem codigo da sala
-	  new_codFilme int,							--para as tabelas que possuem codigo do filme
-	  old_codFilme int,							--para as tabelas que possuem codigo do filme
-	  new_fileira varchar(1),					--para as tabelas que possuem fileira
-	  old_fileira varchar(1),					--para as tabelas que possuem fileira
-	  new_numero int,							--para as tabelas que possuem numero
-	  old_numero int,							--para as tabelas que possuem numero
-	  new_codSessao int,						--para as tabelas que possuem codigo da sessao
-	  old_codSessao int,						--para as tabelas que possuem codigo da sessao
-	  new_codPoltrona int,						--para as tabelas que possuem codigo da poltrona
-	  old_codPoltrona int,						--para as tabelas que possuem codigo da poltrona
-	  new_emissao date,							--para as tabelas que possuem data de emissao
-	  old_emissao date,							--para as tabelas que possuem data de emissao
-	  new_total DECIMAL(15,4),					--para as tabelas que possuem valor total
-	  old_total DECIMAL(15,4),					--para as tabelas que possuem valor total
-	  new_cpfCliente varchar(11),				--para as tabelas que possuem numero cpf do cliente
-	  old_cpfCliente varchar(11),				--para as tabelas que possuem numero cpf do cliente
-	  new_codUsuario int,						--para as tabelas que possuem codigo do usuario
-	  old_codUsuario int,						--para as tabelas que possuem codigo do usuario
-	  new_codVenda int,							--para as tabelas que possuem codigo da venda
-	  old_codVenda int,							--para as tabelas que possuem codigo da venda
-	  new_codIngresso int,						--para as tabelas que possuem codigo do ingresso
-	  old_codIngresso int,						--para as tabelas que possuem codigo do ingresso
-      acao varchar(6),       					--1 para todas as tabelas
-      usuario varchar(50),  					--1 para todas as tabelas
-      hora timestamp							--1 para todas as tabelas  
+      log_id int auto_increment primary key,  	//1 para essa tabela
+      new_id int,  								//1 para todas as tabelas 
+      old_id int,  								//1 para todas as tabelas 
+	  new_codigo int,  							//1 para todas as tabelas 
+      old_codigo int,  							//1 para todas as tabelas 
+      new_dia datetime,  						//para as tabelas que possuem data
+      old_dia datetime, 						//para as tabelas que possuem data
+      new_valor DECIMAL(15,4),					//para as tabelas que possuem valores 	  
+      old_valor DECIMAL(15,4),  				//para as tabelas que possuem valores
+	  new_idioma varchar(50),					//para as tabelas que possuem idioma
+	  old_idioma varchar(50),					//para as tabelas que possuem idioma
+	  new_descricao varchar(150),				//para as tabelas que possuem descricao
+	  old_descricao varchar(150),				//para as tabelas que possuem descricao
+	  new_nome varchar(250),					//para as tabelas que possuem nome
+	  old_nome varchar(250),					//para as tabelas que possuem nome
+	  new_codIdioma int,						//para as tabelas que possuem idioma
+	  old_codIdioma int,						//para as tabelas que possuem idioma
+	  new_codClassificacao int,					//para as tabelas que possuem classificação
+	  old_codClassificacao int,					//para as tabelas que possuem classificação
+	  new_codLegenda int,						//para as tabelas que possuem legenda
+	  old_codLegenda int,						//para as tabelas que possuem legenda
+	  new_codCategoria int,						//para as tabelas que possuem categoria
+	  old_codCategoria int,						//para as tabelas que possuem categoria
+	  new_cpf varchar(11),						//para as tabelas que possuem cpf
+	  old_cpf varchar(11),						//para as tabelas que possuem cpf
+	  new_permissoes varchar(5),				//para as tabelas que possuem permissoes
+	  old_permissoes varchar(5),				//para as tabelas que possuem permissoes
+	  new_horario time,							//para as tabelas que possuem horario
+	  old_horario time,							//para as tabelas que possuem horario
+	  new_codSala int,							//para as tabelas que possuem codigo da sala
+	  old_codSala int,							//para as tabelas que possuem codigo da sala
+	  new_codFilme int,							//para as tabelas que possuem codigo do filme
+	  old_codFilme int,							//para as tabelas que possuem codigo do filme
+	  new_fileira varchar(1),					//para as tabelas que possuem fileira
+	  old_fileira varchar(1),					//para as tabelas que possuem fileira
+	  new_numero int,							//para as tabelas que possuem numero
+	  old_numero int,							//para as tabelas que possuem numero
+	  new_codSessao int,						//para as tabelas que possuem codigo da sessao
+	  old_codSessao int,						//para as tabelas que possuem codigo da sessao
+	  new_codPoltrona int,						//para as tabelas que possuem codigo da poltrona
+	  old_codPoltrona int,						//para as tabelas que possuem codigo da poltrona
+	  new_emissao date,							//para as tabelas que possuem data de emissao
+	  old_emissao date,							//para as tabelas que possuem data de emissao
+	  new_total DECIMAL(15,4),					//para as tabelas que possuem valor total
+	  old_total DECIMAL(15,4),					//para as tabelas que possuem valor total
+	  new_cpfCliente varchar(11),				//para as tabelas que possuem numero cpf do cliente
+	  old_cpfCliente varchar(11),				//para as tabelas que possuem numero cpf do cliente
+	  new_codUsuario int,						//para as tabelas que possuem codigo do usuario
+	  old_codUsuario int,						//para as tabelas que possuem codigo do usuario
+	  new_codVenda int,							//para as tabelas que possuem codigo da venda
+	  old_codVenda int,							//para as tabelas que possuem codigo da venda
+	  new_codIngresso int,						//para as tabelas que possuem codigo do ingresso
+	  old_codIngresso int,						//para as tabelas que possuem codigo do ingresso
+      acao varchar(6),       					//1 para todas as tabelas
+      usuario varchar(50),  					//1 para todas as tabelas
+      hora timestamp							//1 para todas as tabelas  
  );
  
  
@@ -133,13 +133,14 @@ ADD  old_duracao  int;
 ALTER TABLE sessao
 CHANGE data dia time;
 
-ALTER TABLE filme DROP COLUMN duracao;
+DROP TRIGGER auditoria_log_update_sala;
+DROP TRIGGER auditoria_log_delete_sala;
  
 TRIGGERS DE AUDITORIA PARA A TABELA SALA:
 
 create trigger auditoria_log_insert_sala after insert on sala  
 	for each row  
-           insert into auditoria_log(new_id,old_id,new_codigo,old_codigo,new_dia,old_dia,new_valor,old_valor,new_idioma,old_idioma,new_descricao,old_descricao,new_nome,old_nome,new_codIdioma,old_codIdioma,new_codClassificacao,old_codClassificacao,new_codLegenda,old_codLegenda,new_codCategoria,old_codCategoria,new_cpf,old_cpf,new_permissoes,old_permissoes,new_horario,old_horario,new_codSala,old_codSala,new_codFilme,old_codFilme,new_fileira,old_fileira,new_numero,old_numero,new_codSessao,old_codSessao,new_codPoltrona,old_codPoltrona,new_emissao,old_emissao,new_total,old_total,new_cpfCliente,old_cpfCliente,new_codUsuario,old_codUsuario,new_codVenda,old_codVenda,new_codIngresso,old_codIngresso,new_duracao,old_duracao acao, usuario, hora)   
+           insert into auditoria_log(new_id,old_id,new_codigo,old_codigo,new_dia,old_dia,new_valor,old_valor,new_idioma,old_idioma,new_descricao,old_descricao,new_nome,old_nome,new_codIdioma,old_codIdioma,new_codClassificacao,old_codClassificacao,new_codLegenda,old_codLegenda,new_codCategoria,old_codCategoria,new_cpf,old_cpf,new_permissoes,old_permissoes,new_horario,old_horario,new_codSala,old_codSala,new_codFilme,old_codFilme,new_fileira,old_fileira,new_numero,old_numero,new_codSessao,old_codSessao,new_codPoltrona,old_codPoltrona,new_emissao,old_emissao,new_total,old_total,new_cpfCliente,old_cpfCliente,new_codUsuario,old_codUsuario,new_codVenda,old_codVenda,new_codIngresso,old_codIngresso,new_duracao,old_duracao, acao, usuario, hora)   
                      values(null,null,new.codigo,null,null,null,null,null,null,null,new.descricao,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null, 'INSERT', user(), now());
 
 create trigger auditoria_log_update_sala after update on sala  
@@ -158,11 +159,11 @@ TESTES DAS TRIGGERS PARA A TABELA SALA:
 insert into sala (descricao) values ('Sala 1 Andar');
 insert into sala (descricao) values ('Sala 3 Andar');
 insert into sala (descricao) values ('Sala 3 Andar');
-update sala set descricao = 'Sala 2 Andar' where codigo = 4;  
-delete from sala where codigo = 6; 
+update sala set descricao = 'Sala 2 Andar' where codigo = 3;  
+delete from sala where codigo = 1; 
  
  
-TRIGGERS DE AUDITORIA PARA A TABELA IDIOMA:
+--TRIGGERS DE AUDITORIA PARA A TABELA IDIOMA:
 
 create trigger auditoria_log_insert_idioma after insert on idioma  
 	for each row  
@@ -197,8 +198,6 @@ create trigger auditoria_log_delete_classificacao after delete on classificacao
            insert into auditoria_log(new_id,old_id,new_codigo,old_codigo,new_dia,old_dia,new_valor,old_valor,new_idioma,old_idioma,new_descricao,old_descricao,new_nome,old_nome,new_codIdioma,old_codIdioma,new_codClassificacao,old_codClassificacao,new_codLegenda,old_codLegenda,new_codCategoria,old_codCategoria,new_cpf,old_cpf,new_permissoes,old_permissoes,new_horario,old_horario,new_codSala,old_codSala,new_codFilme,old_codFilme,new_fileira,old_fileira,new_numero,old_numero,new_codSessao,old_codSessao,new_codPoltrona,old_codPoltrona,new_emissao,old_emissao,new_total,old_total,new_cpfCliente,old_cpfCliente,new_codUsuario,old_codUsuario,new_codVenda,old_codVenda,new_codIngresso,old_codIngresso,new_duracao,old_duracao, acao, usuario, hora)   
                      values(null,null,null,old.codigo,null,null,null,null,null,null,null,old.descricao,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null, 'DELETE', user(), now());
 
-insert into classificacao (descricao) values ('10 anos ou mais');
-
 
 TRIGGERS DE AUDITORIA PARA A TABELA CATEGORIA:
 
@@ -217,7 +216,6 @@ create trigger auditoria_log_delete_categoria after delete on categoria
            insert into auditoria_log(new_id,old_id,new_codigo,old_codigo,new_dia,old_dia,new_valor,old_valor,new_idioma,old_idioma,new_descricao,old_descricao,new_nome,old_nome,new_codIdioma,old_codIdioma,new_codClassificacao,old_codClassificacao,new_codLegenda,old_codLegenda,new_codCategoria,old_codCategoria,new_cpf,old_cpf,new_permissoes,old_permissoes,new_horario,old_horario,new_codSala,old_codSala,new_codFilme,old_codFilme,new_fileira,old_fileira,new_numero,old_numero,new_codSessao,old_codSessao,new_codPoltrona,old_codPoltrona,new_emissao,old_emissao,new_total,old_total,new_cpfCliente,old_cpfCliente,new_codUsuario,old_codUsuario,new_codVenda,old_codVenda,new_codIngresso,old_codIngresso,new_duracao,old_duracao, acao, usuario, hora)   
                      values(null,null,null,old.codigo,null,null,null,null,null,null,null,old.descricao,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null, 'DELETE', user(), now());
 
-insert into categoria (descricao) values ('Terror');
 
 TRIGGERS DE AUDITORIA PARA A TABELA LEGENDA:
 
@@ -253,8 +251,6 @@ create trigger auditoria_log_delete_filme after delete on filme
 	for each row  
            insert into auditoria_log(new_id,old_id,new_codigo,old_codigo,new_dia,old_dia,new_valor,old_valor,new_idioma,old_idioma,new_descricao,old_descricao,new_nome,old_nome,new_codIdioma,old_codIdioma,new_codClassificacao,old_codClassificacao,new_codLegenda,old_codLegenda,new_codCategoria,old_codCategoria,new_cpf,old_cpf,new_permissoes,old_permissoes,new_horario,old_horario,new_codSala,old_codSala,new_codFilme,old_codFilme,new_fileira,old_fileira,new_numero,old_numero,new_codSessao,old_codSessao,new_codPoltrona,old_codPoltrona,new_emissao,old_emissao,new_total,old_total,new_cpfCliente,old_cpfCliente,new_codUsuario,old_codUsuario,new_codVenda,old_codVenda,new_codIngresso,old_codIngresso,new_duracao,old_duracao, acao, usuario, hora)   
                      values(null,null,null,old.codigo,null,null,null,old.valor,null,null,null,null,null,null,null,old.codIdioma,null,old.codClassificacao,null,old.codLegenda,null,old.codCategoria,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,old.duracao, 'DELETE', user(), now());
-
-insert into filme (nome, duracao, valor, codIdioma, codClassificacao, codCategoria, codLegenda) values ('Terror na Universidade', 90, 10.00, 1,1,1,1);
 
 
 TRIGGERS DE AUDITORIA PARA A TABELA USUÁRIO:

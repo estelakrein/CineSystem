@@ -21,7 +21,7 @@ USE `cinesystem` ;
 -- Table `cinesystem`.`Sala`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cinesystem`.`Sala` (
-  `Codigo` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `codigo` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `descricao` VARCHAR(45) NULL COMMENT '',
   PRIMARY KEY (`Codigo`)  COMMENT '')
 ENGINE = InnoDB;
@@ -32,7 +32,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cinesystem`.`Idioma` (
   `codigo` INT NOT NULL AUTO_INCREMENT COMMENT '',
-  `idioma` VARCHAR(45) NULL COMMENT '',
+  `descricao` VARCHAR(45) NULL COMMENT '',
   PRIMARY KEY (`codigo`)  COMMENT '')
 ENGINE = InnoDB;
 
@@ -111,8 +111,8 @@ ENGINE = InnoDB;
 -- Table `cinesystem`.`Usuario`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cinesystem`.`Usuario` (
-  `Codigo` INT NOT NULL AUTO_INCREMENT COMMENT '',
-  `Nome` VARCHAR(250) NULL COMMENT '',
+  `codigo` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `nome` VARCHAR(250) NULL COMMENT '',
   `cpf` VARCHAR(11) NULL COMMENT '',
   `permissoes` VARCHAR(5) NULL COMMENT '',
   PRIMARY KEY (`Codigo`)  COMMENT '')
@@ -167,7 +167,7 @@ ENGINE = InnoDB;
 -- Table `cinesystem`.`Ingresso`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cinesystem`.`Ingresso` (
-  `Codigo` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `codigo` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `codSessao` INT NOT NULL COMMENT '',
   `codPoltrona` INT NOT NULL COMMENT '',
   PRIMARY KEY (`Codigo`)  COMMENT '',

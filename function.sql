@@ -68,6 +68,10 @@ CALL verIdiomas(1);
 
 
 
+--Comando para acessar o log de erros:
+	show variables like '%log%';
+
+
 
 
 
