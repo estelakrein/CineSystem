@@ -265,40 +265,16 @@ public class IfrCategoria extends javax.swing.JInternalFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
 
-        if (codigo == 0) {
             try {
                 Categoria categoria = new Categoria();
+                categoria.setCodigo(codigo);
                 categoria.setDescricao(tfdDescricao.getText());
                 DaoGenerico.getInstance().insert(categoria);
-                JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso!");
+                JOptionPane.showMessageDialog(null, "Cadastro finalizado com sucesso!");
                 inicia();
             } catch (HibernateException hibEx) {
                 hibEx.printStackTrace();
-            }
-        } else {
-            List resultado = null;
-            Session sessao = null;
-            try {
-                sessao = HibernateUtil.getSessionFactory().openSession();
-                Transaction transacao = sessao.beginTransaction();
-                int id = codigo;
-
-                org.hibernate.Query query = sessao.createQuery("FROM Categoria WHERE codigo = " + id);
-
-                resultado = query.list();
-                for (Object obj : resultado) {
-                    Categoria categoria = (Categoria) obj;
-                    categoria.setCodigo(id);
-                    categoria.setDescricao(tfdDescricao.getText());
-                    sessao.update(categoria);
-                    transacao.commit();
-                    JOptionPane.showMessageDialog(null, "Cadastro alterado com sucesso!");
-                    inicia();
-                }
-            } catch (HibernateException hibEx) {
-                hibEx.printStackTrace();
-            }
-        }      
+            }    
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void tblCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCategoriaMouseClicked
@@ -333,6 +309,7 @@ public class IfrCategoria extends javax.swing.JInternalFrame {
         } catch (HibernateException hibEx) {
             hibEx.printStackTrace();
         }
+        inicia();
     }//GEN-LAST:event_btnExcluirActionPerformed
 
 

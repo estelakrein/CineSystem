@@ -30,15 +30,17 @@ public class Filme implements Serializable {
     @Column(name = "nome")
     private String nome;
     @Column(name = "duracao")
-    private Time duracao;
-    @Column(name = "categoria")
+    private int duracao;
+    @Column(name = "codCategoria")
     private Categoria categoria;
-    @Column(name = "idioma")
+    @Column(name = "codIdioma")
     private Idioma idioma;
-    @Column(name = "classificacao")
+    @Column(name = "codClassificacao")
     private Classificacao classificacao;
-    @Column(name = "legenda")
+    @Column(name = "codLegenda")
     private Legenda legenda;
+    @Column(name = "valor")
+    private double valor;
 
     /**
      * @return the codigo
@@ -47,6 +49,11 @@ public class Filme implements Serializable {
         return codigo;
     }
 
+    @Override
+    public String toString(){
+        return this.nome;
+    }
+                
     /**
      * @param codigo the codigo to set
      */
@@ -71,14 +78,14 @@ public class Filme implements Serializable {
     /**
      * @return the duracao
      */
-    public Time getDuracao() {
+    public int getDuracao() {
         return duracao;
     }
 
     /**
      * @param duracao the duracao to set
      */
-    public void setDuracao(Time duracao) {
+    public void setDuracao(int duracao) {
         this.duracao = duracao;
     }
 
@@ -136,6 +143,20 @@ public class Filme implements Serializable {
      */
     public void setLegenda(Legenda legenda) {
         this.legenda = legenda;
+    }
+
+    /**
+     * @return the valor
+     */
+    public double getValor() {
+        return valor;
+    }
+
+    /**
+     * @param valor the valor to set
+     */
+    public void setValor(double valor) {
+        this.valor = valor;
     }
          
 }

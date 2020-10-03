@@ -248,44 +248,21 @@ public class IfrClassificacao extends javax.swing.JInternalFrame {
         } catch (HibernateException hibEx) {
             hibEx.printStackTrace();
         }
+        inicia();
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
 
-        if (codigo == 0) {
             try {
                 Classificacao classificacao = new Classificacao();
+                classificacao.setCodigo(codigo);
                 classificacao.setDescricao(tfdDescricao.getText());                
-                JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso!");
+                JOptionPane.showMessageDialog(null, "Cadastro finalizado com sucesso!");
                 DaoGenerico.getInstance().insert(classificacao);
                 inicia();
             } catch (HibernateException hibEx) {
                 hibEx.printStackTrace();
             }
-        } else {
-            List resultado = null;
-            Session sessao = null;
-            try {
-                sessao = HibernateUtil.getSessionFactory().openSession();
-                Transaction transacao = sessao.beginTransaction();
-                int id = codigo;
-
-                org.hibernate.Query query = sessao.createQuery("FROM Classificacao WHERE codigo = " + id);
-
-                resultado = query.list();
-                for (Object obj : resultado) {
-                    Classificacao classificacao = (Classificacao) obj;
-                    classificacao.setCodigo(id);
-                    classificacao.setDescricao(tfdDescricao.getText());
-                    sessao.update(classificacao);
-                    transacao.commit();
-                    JOptionPane.showMessageDialog(null, "Cadastro alterado com sucesso!");
-                    inicia();
-                }
-            } catch (HibernateException hibEx) {
-                hibEx.printStackTrace();
-            }
-        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void tblClassificacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClassificacaoMouseClicked
