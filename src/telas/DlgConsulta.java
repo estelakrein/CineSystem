@@ -5,8 +5,19 @@
  */
 package telas;
 
+import daos.DaoCategoria;
+import daos.DaoClassificacao;
+import daos.DaoFilme;
+import daos.DaoIdioma;
+import daos.DaoLegenda;
+import daos.DaoSala;
+import entidades.Categoria;
+import entidades.Classificacao;
 import entidades.Filme;
+import entidades.Idioma;
+import entidades.Legenda;
 import entidades.Sala;
+import entidades.Sessao;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -133,17 +144,13 @@ public class DlgConsulta extends javax.swing.JDialog {
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         if (tabela == "Filme") {
             List<Filme> resultado = new ArrayList();
-            String sql = "FROM Filme "
-                    + "WHERE nome LIKE '%" + tfdPesquisar.getText() + "%' "
-                    + "ORDER BY codigo";
             tblPesquisa.getColumnModel().getColumn(0).setPreferredWidth(50);
             tblPesquisa.getColumnModel().getColumn(1).setPreferredWidth(150);
             DefaultTableModel modelo = (DefaultTableModel) tblPesquisa.getModel();
             modelo.setNumRows(0);
             try {
-                Session sessao = HibernateUtil.getSessionFactory().openSession();
-                org.hibernate.Query query = sessao.createQuery(sql);
-                resultado = query.list();
+                DaoFilme daofilme = new DaoFilme();
+                resultado = daofilme.consultaParam(tfdPesquisar.getText());
                 for (int i = 0; i < resultado.size(); i++) {
                     Filme filme = resultado.get(i);
                     modelo.addRow(new Object[]{filme.getCodigo(), filme.getNome()});
@@ -155,17 +162,13 @@ public class DlgConsulta extends javax.swing.JDialog {
         }
         if (tabela == "Sala") {
             List<Sala> resultado = new ArrayList();
-            String sql = "FROM Sala "
-                    + "WHERE descricao LIKE '%" + tfdPesquisar.getText() + "%' "
-                    + "ORDER BY codigo";
             tblPesquisa.getColumnModel().getColumn(0).setPreferredWidth(50);
             tblPesquisa.getColumnModel().getColumn(1).setPreferredWidth(150);
             DefaultTableModel modelo = (DefaultTableModel) tblPesquisa.getModel();
             modelo.setNumRows(0);
             try {
-                Session sessao = HibernateUtil.getSessionFactory().openSession();
-                org.hibernate.Query query = sessao.createQuery(sql);
-                resultado = query.list();
+                DaoSala daoSala = new DaoSala();
+                resultado = daoSala.consultaParam(tfdPesquisar.getText());
                 for (int i = 0; i < resultado.size(); i++) {
                     Sala sala = resultado.get(i);
                     modelo.addRow(new Object[]{sala.getCodigo(), sala.getDescricao()});
@@ -174,6 +177,96 @@ public class DlgConsulta extends javax.swing.JDialog {
             } catch (HibernateException hibEx) {
                 hibEx.printStackTrace();
             }
+        }
+        if (tabela == "Idioma") {
+            List<Idioma> resultado = new ArrayList();
+            tblPesquisa.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tblPesquisa.getColumnModel().getColumn(1).setPreferredWidth(150);
+            DefaultTableModel modelo = (DefaultTableModel) tblPesquisa.getModel();
+            modelo.setNumRows(0);
+            try {
+                DaoIdioma daoIdioma = new DaoIdioma();
+                resultado = daoIdioma.consultaParam(tfdPesquisar.getText());
+                for (int i = 0; i < resultado.size(); i++) {
+                    Idioma idioma = resultado.get(i);
+                    modelo.addRow(new Object[]{idioma.getCodigo(), idioma.getIdioma()});
+
+                }
+            } catch (HibernateException hibEx) {
+                hibEx.printStackTrace();
+            }
+        }
+        if (tabela == "Categoria") {
+            List<Categoria> resultado = new ArrayList();
+            tblPesquisa.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tblPesquisa.getColumnModel().getColumn(1).setPreferredWidth(150);
+            DefaultTableModel modelo = (DefaultTableModel) tblPesquisa.getModel();
+            modelo.setNumRows(0);
+            try {
+                DaoCategoria daoCategoria = new DaoCategoria();
+                resultado = daoCategoria.consultaParam(tfdPesquisar.getText());
+                for (int i = 0; i < resultado.size(); i++) {
+                    Categoria categoria = resultado.get(i);
+                    modelo.addRow(new Object[]{categoria.getCodigo(), categoria.getDescricao()});
+
+                }
+            } catch (HibernateException hibEx) {
+                hibEx.printStackTrace();
+            }
+        }
+        if (tabela == "Legenda") {
+            List<Legenda> resultado = new ArrayList();
+            tblPesquisa.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tblPesquisa.getColumnModel().getColumn(1).setPreferredWidth(150);
+            DefaultTableModel modelo = (DefaultTableModel) tblPesquisa.getModel();
+            modelo.setNumRows(0);
+            try {
+                DaoLegenda daoLegenda = new DaoLegenda();
+                resultado = daoLegenda.consultaParam(tfdPesquisar.getText());
+                for (int i = 0; i < resultado.size(); i++) {
+                    Legenda legenda = resultado.get(i);
+                    modelo.addRow(new Object[]{legenda.getCodigo(), legenda.getDescricao()});
+
+                }
+            } catch (HibernateException hibEx) {
+                hibEx.printStackTrace();
+            }
+        }
+        if (tabela == "Classificacao") {
+            List<Classificacao> resultado = new ArrayList();
+            tblPesquisa.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tblPesquisa.getColumnModel().getColumn(1).setPreferredWidth(150);
+            DefaultTableModel modelo = (DefaultTableModel) tblPesquisa.getModel();
+            modelo.setNumRows(0);
+            try {
+                DaoClassificacao daoClassificacao = new DaoClassificacao();
+                resultado = daoClassificacao.consultaParam(tfdPesquisar.getText());
+                for (int i = 0; i < resultado.size(); i++) {
+                    Classificacao clas = resultado.get(i);
+                    modelo.addRow(new Object[]{clas.getCodigo(), clas.getDescricao()});
+
+                }
+            } catch (HibernateException hibEx) {
+                hibEx.printStackTrace();
+            }
+        }
+        if (tabela == "Sessao") {
+//            List<Sessao> resultado = new ArrayList();
+//            tblPesquisa.getColumnModel().getColumn(0).setPreferredWidth(50);
+//            tblPesquisa.getColumnModel().getColumn(1).setPreferredWidth(150);
+//            DefaultTableModel modelo = (DefaultTableModel) tblPesquisa.getModel();
+//            modelo.setNumRows(0);
+//            try {
+//                DaoClassificacao daoClassificacao = new DaoClassificacao();
+//                resultado = daoClassificacao.consultaParam(tfdPesquisar.getText());
+//                for (int i = 0; i < resultado.size(); i++) {
+//                    Classificacao clas = resultado.get(i);
+//                    modelo.addRow(new Object[]{clas.getCodigo(), clas.getDescricao()});
+//
+//                }
+//            } catch (HibernateException hibEx) {
+//                hibEx.printStackTrace();
+//            }
         }
     }//GEN-LAST:event_btnPesquisarActionPerformed
 

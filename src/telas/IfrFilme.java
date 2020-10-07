@@ -1,6 +1,11 @@
 package telas;
 
+import daos.DaoCategoria;
+import daos.DaoClassificacao;
+import daos.DaoFilme;
 import daos.DaoGenerico;
+import daos.DaoIdioma;
+import daos.DaoLegenda;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -15,6 +20,7 @@ import entidades.Legenda;
 import entidades.Filme;
 import java.awt.Color;
 import javax.swing.JComboBox;
+
 /**
  *
  * @author Acer
@@ -22,7 +28,12 @@ import javax.swing.JComboBox;
 public class IfrFilme extends javax.swing.JInternalFrame {
 
     int codigo = 0;
-    
+    String consulta = "";
+    DaoCategoria daoCategoria = new DaoCategoria();
+    DaoIdioma daoIdioma = new DaoIdioma();
+    DaoClassificacao daoClassificacao = new DaoClassificacao();
+    DaoLegenda daoLegenda = new DaoLegenda();
+
     /**
      * Creates new form IfrFilme
      */
@@ -43,8 +54,6 @@ public class IfrFilme extends javax.swing.JInternalFrame {
         cabecalho[5] = "Categoria";
 
         List<Filme> resultado = new ArrayList();
-        String sql = "FROM Filme "
-                + "ORDER BY codigo";
         tblFilme.getColumnModel().getColumn(0).setPreferredWidth(50);
         tblFilme.getColumnModel().getColumn(1).setPreferredWidth(50);
         tblFilme.getColumnModel().getColumn(2).setPreferredWidth(50);
@@ -54,9 +63,8 @@ public class IfrFilme extends javax.swing.JInternalFrame {
         DefaultTableModel modelo = (DefaultTableModel) tblFilme.getModel();
         modelo.setNumRows(0);
         try {
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
-            org.hibernate.Query query = sessao.createQuery(sql);
-            resultado = query.list();
+            DaoFilme daoFilme = new DaoFilme();
+            resultado = daoFilme.consultaTodos();
             for (int i = 0; i < resultado.size(); i++) {
                 Filme filme = resultado.get(i);
                 modelo.addRow(new Object[]{filme.getCodigo(), filme.getNome(), filme.getDuracao(), filme.getValor(), filme.getIdioma().getIdioma(), filme.getCategoria().getDescricao()});
@@ -75,70 +83,10 @@ public class IfrFilme extends javax.swing.JInternalFrame {
         tfdNome.setText("");
         tfdDuracao.setText("");
         tfdValor.setText("");
-        
-        List<Idioma> resultadoidi = new ArrayList();
-        String sql = "FROM Idioma "
-                + "ORDER BY codigo";
-        try {
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
-            org.hibernate.Query query = sessao.createQuery(sql);
-            resultadoidi = query.list();
-            for (int i = 0; i < resultadoidi.size(); i++) {
-                Idioma idioma = resultadoidi.get(i);
-                cbxIdioma.addItem(idioma);
-            }
-        } catch (HibernateException hibEx) {
-            hibEx.printStackTrace();
-        }
-        
-        List<Legenda> resultadoleg = new ArrayList();
-        sql = "FROM Legenda "
-                + "ORDER BY codigo";
-        try {
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
-            org.hibernate.Query query = sessao.createQuery(sql);
-            resultadoleg = query.list();
-            for (int i = 0; i < resultadoleg.size(); i++) {
-                Legenda legenda = resultadoleg.get(i);
-                cbxLegenda.addItem(legenda);
-            }
-        } catch (HibernateException hibEx) {
-            hibEx.printStackTrace();
-        }
-        
-        List<Categoria> resultadocat = new ArrayList();
-        sql = "FROM Categoria "
-                + "ORDER BY codigo";
-        try {
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
-            org.hibernate.Query query = sessao.createQuery(sql);
-            resultadocat = query.list();
-            for (int i = 0; i < resultadocat.size(); i++) {
-                Categoria categoria = resultadocat.get(i);
-                cbxCategoria.addItem(categoria);
-            }
-        } catch (HibernateException hibEx) {
-            hibEx.printStackTrace();
-        }
-        
-        List<Classificacao> resultadocla = new ArrayList();
-        sql = "FROM Classificacao "
-                + "ORDER BY codigo";
-        try {
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
-            org.hibernate.Query query = sessao.createQuery(sql);
-            resultadocla = query.list();
-            for (int i = 0; i < resultadocla.size(); i++) {
-                Classificacao classificacao = resultadocla.get(i);
-                cbxClassificacao.addItem(classificacao);
-            }
-        } catch (HibernateException hibEx) {
-            hibEx.printStackTrace();
-        }
         popularTabela();
         codigo = 0;
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -162,11 +110,15 @@ public class IfrFilme extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        cbxIdioma = new javax.swing.JComboBox<>();
-        cbxClassificacao = new javax.swing.JComboBox<>();
-        cbxLegenda = new javax.swing.JComboBox<>();
-        cbxCategoria = new javax.swing.JComboBox<>();
         lblMensagem = new javax.swing.JLabel();
+        tfdCdIdioma = new javax.swing.JTextField();
+        tfdCdLegenda = new javax.swing.JTextField();
+        tfdCdClassificacao = new javax.swing.JTextField();
+        tfdCdCategoria = new javax.swing.JTextField();
+        tfdIdioma = new javax.swing.JTextField();
+        tfdLegenda = new javax.swing.JTextField();
+        tfdClassificacao = new javax.swing.JTextField();
+        tfdCategoria = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         tfdBuscar = new javax.swing.JTextField();
@@ -176,6 +128,7 @@ public class IfrFilme extends javax.swing.JInternalFrame {
         btnFechar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
+        btnConsultar = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -210,13 +163,43 @@ public class IfrFilme extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Classificação:");
 
-        cbxIdioma.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxIdiomaActionPerformed(evt);
+        lblMensagem.setText("Mensagem");
+
+        tfdCdIdioma.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tfdCdIdiomaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tfdCdIdiomaFocusLost(evt);
             }
         });
 
-        lblMensagem.setText("Mensagem");
+        tfdCdLegenda.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tfdCdLegendaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tfdCdLegendaFocusLost(evt);
+            }
+        });
+
+        tfdCdClassificacao.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tfdCdClassificacaoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tfdCdClassificacaoFocusLost(evt);
+            }
+        });
+
+        tfdCdCategoria.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tfdCdCategoriaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tfdCdCategoriaFocusLost(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -225,36 +208,47 @@ public class IfrFilme extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblMensagem)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblMensagem)
+                    .addComponent(jLabel6)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel2))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(tfdDuracao, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbxIdioma, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cbxLegenda, 0, 199, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel7))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(tfdValor, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(cbxClassificacao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cbxCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(tfdNome, javax.swing.GroupLayout.PREFERRED_SIZE, 513, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18))))
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tfdCdClassificacao, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
+                            .addComponent(tfdCdLegenda)
+                            .addComponent(tfdCdCategoria))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tfdIdioma)
+                            .addComponent(tfdLegenda)
+                            .addComponent(tfdClassificacao)
+                            .addComponent(tfdCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel5)
+                                    .addGap(39, 39, 39)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(tfdCdIdioma, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(tfdDuracao, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jLabel4)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                            .addComponent(tfdValor, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel2)
+                            .addGap(45, 45, 45)
+                            .addComponent(tfdNome, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 89, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -272,18 +266,26 @@ public class IfrFilme extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel8)
-                    .addComponent(cbxIdioma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbxClassificacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfdCdIdioma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfdIdioma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jLabel7)
-                    .addComponent(cbxLegenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfdCdLegenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfdLegenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(tfdCdClassificacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfdClassificacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(tfdCdCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfdCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(lblMensagem)
-                .addContainerGap(122, Short.MAX_VALUE))
+                .addGap(22, 22, 22))
         );
 
         jTabbedPane1.addTab("Cadastro", jPanel1);
@@ -372,13 +374,22 @@ public class IfrFilme extends javax.swing.JInternalFrame {
             }
         });
 
+        btnConsultar.setText("Consultar");
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jTabbedPane1)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(btnConsultar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSalvar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnExcluir)
@@ -394,7 +405,8 @@ public class IfrFilme extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnFechar)
                     .addComponent(btnExcluir)
-                    .addComponent(btnSalvar))
+                    .addComponent(btnSalvar)
+                    .addComponent(btnConsultar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -408,23 +420,23 @@ public class IfrFilme extends javax.swing.JInternalFrame {
 
         codigo = Integer.parseInt(id);
         Filme filme = new Filme();
-        String sql = "FROM Filme " + "WHERE codigo = " + id;
-        try {
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
-            org.hibernate.Query query = sessao.createQuery(sql);
-            List<Filme> resultado = new ArrayList();
-            resultado = query.list();
-            filme = resultado.get(0);
-        } catch (HibernateException hibEx) {
-            hibEx.printStackTrace();
-        }
+        DaoFilme daoFilme = new DaoFilme();
+        filme = daoFilme.consultaId(codigo);
         tfdNome.setText(nome);
         tfdDuracao.setText(String.valueOf(filme.getDuracao()));
         tfdValor.setText(String.valueOf(filme.getValor()));
-        cbxIdioma.setSelectedItem(filme.getIdioma());
-        cbxLegenda.setSelectedItem(filme.getLegenda());
-        cbxClassificacao.setSelectedItem(filme.getClassificacao());
-        cbxCategoria.setSelectedItem(filme.getCategoria());
+        tfdCdIdioma.setText(String.valueOf(filme.getIdioma()));
+        String dIdioma = daoIdioma.consultaId(filme.getIdioma().getCodigo()).getIdioma();
+        tfdIdioma.setText(dIdioma);
+        tfdCdLegenda.setText(String.valueOf(filme.getLegenda()));
+        String dLegenda = daoLegenda.consultaId(filme.getLegenda().getCodigo()).getDescricao();
+        tfdLegenda.setText(dLegenda);
+        tfdCdClassificacao.setText(String.valueOf(filme.getClassificacao()));
+        String dClassificacao = daoClassificacao.consultaId(filme.getClassificacao().getCodigo()).getDescricao();
+        tfdClassificacao.setText(dClassificacao);
+        tfdCdCategoria.setText(String.valueOf(filme.getCategoria()));
+        String dCategoria = daoCategoria.consultaId(filme.getCategoria().getCodigo()).getDescricao();
+        tfdCategoria.setText(dCategoria);
         jTabbedPane1.setSelectedIndex(0);
         tfdNome.requestFocus();
     }//GEN-LAST:event_tblFilmeMouseClicked
@@ -434,123 +446,74 @@ public class IfrFilme extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnFecharActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        List resultado = null;
-        Session sessao = null;
-        try {
-            sessao = HibernateUtil.getSessionFactory().openSession();
-            Transaction transacao = sessao.beginTransaction();
-            String id = String.valueOf(tblFilme.getValueAt(tblFilme.getSelectedRow(), 0));
-
-            org.hibernate.Query query = sessao.createQuery("FROM Filme WHERE codigo = " + id);
-
-            resultado = query.list();
-            for (Object obj : resultado) {
-                Categoria categoria = (Categoria) obj;
-                sessao.delete(categoria);
-                transacao.commit();
-                JOptionPane.showMessageDialog(null, "Cadastro excluído com sucesso!");
-            }
-        } catch (HibernateException hibEx) {
-            hibEx.printStackTrace();
-        }
+        String id = String.valueOf(tblFilme.getValueAt(tblFilme.getSelectedRow(), 0));
+        DaoFilme dao = new DaoFilme();
+        String mes = dao.exluir(dao.consultaId(Integer.parseInt(id)));
+        JOptionPane.showMessageDialog(null, mes);
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-            boolean result;
-            try {
-                Filme filme = new Filme();
-                filme.setCodigo(codigo);
-                filme.setNome(tfdNome.getText());
-                filme.setDuracao(Integer.parseInt(tfdDuracao.getText()));
-                Categoria categoria = (Categoria) cbxCategoria.getSelectedItem();
-                filme.setCategoria(categoria);                
-                Classificacao classificacao = (Classificacao) cbxClassificacao.getSelectedItem();
-                filme.setClassificacao(classificacao);
-                Idioma idioma = (Idioma) cbxIdioma.getSelectedItem();
-                filme.setIdioma(idioma);
-                Legenda legenda = (Legenda) cbxLegenda.getSelectedItem();
-                filme.setLegenda(legenda);
-                filme.setValor(Double.parseDouble(tfdValor.getText()));
-                result = DaoGenerico.getInstance().insert(filme);
-                if (result) {
-                    JOptionPane.showMessageDialog(null, "Cadastro finalizado com sucesso!"); }
-                else {
-                    JOptionPane.showMessageDialog(null, "Cadastro com erro!"); 
-                }
-                inicia();
-            } catch (HibernateException hibEx) {
-                hibEx.printStackTrace();
+        boolean result;
+        try {
+            Filme filme = new Filme();
+            filme.setCodigo(codigo);
+            filme.setNome(tfdNome.getText());
+            filme.setDuracao(Integer.parseInt(tfdDuracao.getText()));
+            Categoria categoria = daoCategoria.consultaId(Integer.parseInt(tfdCdCategoria.getText()));
+            filme.setCategoria(categoria);
+            Classificacao classificacao = daoClassificacao.consultaId(Integer.parseInt(tfdCdClassificacao.getText()));
+            filme.setClassificacao(classificacao);
+            Idioma idioma = (Idioma) daoIdioma.consultaId(Integer.parseInt(tfdCdIdioma.getText()));
+            filme.setIdioma(idioma);
+            Legenda legenda = (Legenda) daoLegenda.consultaId(Integer.parseInt(tfdCdLegenda.getText()));
+            filme.setLegenda(legenda);
+            filme.setValor(Double.parseDouble(tfdValor.getText()));
+            result = DaoGenerico.getInstance().insert(filme);
+            if (result) {
+                JOptionPane.showMessageDialog(null, "Cadastro finalizado com sucesso!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Cadastro com erro!");
             }
+            inicia();
+        } catch (HibernateException hibEx) {
+            hibEx.printStackTrace();
+        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    private String validarCampos(){
+    private String validarCampos() {
         String mensagem = "";
-        if  (cbxIdioma.getSelectedIndex() == 0) {
-            cbxIdioma.setBackground(Color.YELLOW);
-            cbxIdioma.requestFocus();
-            mensagem = "Campo IDIOMA com problemas!\n";
-        } else {
-            cbxIdioma.setBackground(Color.WHITE);
-        }
-        if  (cbxLegenda.getSelectedIndex() == 0) {
-            cbxLegenda.setBackground(Color.YELLOW);
-            cbxLegenda.requestFocus();
-            mensagem = "Campo LEGENDA com problemas!\n";
-        } else {
-            cbxLegenda.setBackground(Color.WHITE);
-        }
-        if  (cbxClassificacao.getSelectedIndex() == 0) {
-            cbxClassificacao.setBackground(Color.YELLOW);
-            cbxClassificacao.requestFocus();
-            mensagem = "Campo CLASSIFICAÇÃO com problemas!\n";
-        } else {
-            cbxClassificacao.setBackground(Color.WHITE);
-        }
-        if  (cbxCategoria.getSelectedIndex() == 0) {
-            cbxCategoria.setBackground(Color.YELLOW);
-            cbxCategoria.requestFocus();
-            mensagem = "Campo CATEGORIA com problemas!\n";
-        } else {
-            cbxCategoria.setBackground(Color.WHITE);
-        }
+        
         if (tfdNome.getText() == "") {
             tfdNome.setBackground(Color.YELLOW);
             tfdNome.requestFocus();
             mensagem = mensagem + "Campo NOME com problemas!\n";
-        } else {           
+        } else {
             tfdNome.setBackground(Color.WHITE);
         }
         if (tfdValor.getText() == "") {
             tfdValor.setBackground(Color.YELLOW);
             tfdValor.requestFocus();
             mensagem = mensagem + "Campo VALOR com problemas!\n";
-        } else {           
+        } else {
             tfdValor.setBackground(Color.WHITE);
         }
         if (tfdDuracao.getText() == "") {
             tfdDuracao.setBackground(Color.YELLOW);
             tfdDuracao.requestFocus();
             mensagem = mensagem + "Campo DURAÇÃO com problemas!\n";
-        } else {           
+        } else {
             tfdDuracao.setBackground(Color.WHITE);
         }
         lblMensagem.setText(mensagem);
         lblMensagem.setVisible(true);
         return mensagem;
     }
-    private void cbxIdiomaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxIdiomaActionPerformed
-        
-    }//GEN-LAST:event_cbxIdiomaActionPerformed
-
     private void tfdDuracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfdDuracaoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfdDuracaoActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         List<Filme> resultado = new ArrayList();
-        String sql = "FROM Filme "
-                + "WHERE nome LIKE '%" + tfdBuscar.getText() + "%' "
-                + "ORDER BY codigo";
         tblFilme.getColumnModel().getColumn(0).setPreferredWidth(50);
         tblFilme.getColumnModel().getColumn(1).setPreferredWidth(50);
         tblFilme.getColumnModel().getColumn(2).setPreferredWidth(50);
@@ -560,9 +523,8 @@ public class IfrFilme extends javax.swing.JInternalFrame {
         DefaultTableModel modelo = (DefaultTableModel) tblFilme.getModel();
         modelo.setNumRows(0);
         try {
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
-            org.hibernate.Query query = sessao.createQuery(sql);
-            resultado = query.list();
+            DaoFilme daoFilme = new DaoFilme();
+            resultado = daoFilme.consultaParam(tfdBuscar.getText());
             for (int i = 0; i < resultado.size(); i++) {
                 Filme filme = resultado.get(i);
                 modelo.addRow(new Object[]{filme.getCodigo(), filme.getNome(), filme.getDuracao(), filme.getValor(), filme.getIdioma().getIdioma(), filme.getCategoria().getDescricao()});
@@ -576,15 +538,78 @@ public class IfrFilme extends javax.swing.JInternalFrame {
         tblFilme.setSelectionMode(0);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        DlgConsulta consultar = new DlgConsulta(null, true);
+        consultar.tabela = consulta;
+        consultar.setVisible(true);
+        if (consulta == "Idioma") {
+            tfdCdIdioma.setText(String.valueOf(consultar.retorno));
+            tfdCdIdioma.setEnabled(true);
+            tfdCdIdioma.requestFocus();
+        }
+        if (consulta == "Legenda") {
+            tfdCdLegenda.setText(String.valueOf(consultar.retorno));
+            tfdCdLegenda.setEnabled(true);
+            tfdCdLegenda.requestFocus();
+        }
+        if (consulta == "Categoria") {
+            tfdCdLegenda.setText(String.valueOf(consultar.retorno));
+            tfdCdLegenda.setEnabled(true);
+            tfdCdLegenda.requestFocus();
+        }
+        if (consulta == "Classificacao") {
+            tfdCdLegenda.setText(String.valueOf(consultar.retorno));
+            tfdCdLegenda.setEnabled(true);
+            tfdCdLegenda.requestFocus();
+        }
+    }//GEN-LAST:event_btnConsultarActionPerformed
+
+    private void tfdCdIdiomaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfdCdIdiomaFocusGained
+        consulta = "Idioma";
+    }//GEN-LAST:event_tfdCdIdiomaFocusGained
+
+    private void tfdCdIdiomaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfdCdIdiomaFocusLost
+        Idioma idioma = daoIdioma.consultaId(Integer.parseInt(tfdCdIdioma.getText()));
+        tfdIdioma.setText(idioma.getIdioma());
+        tfdCdLegenda.requestFocus();
+    }//GEN-LAST:event_tfdCdIdiomaFocusLost
+
+    private void tfdCdLegendaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfdCdLegendaFocusGained
+        consulta = "Legenda";
+    }//GEN-LAST:event_tfdCdLegendaFocusGained
+
+    private void tfdCdClassificacaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfdCdClassificacaoFocusGained
+        consulta = "Classificacao";
+    }//GEN-LAST:event_tfdCdClassificacaoFocusGained
+
+    private void tfdCdCategoriaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfdCdCategoriaFocusGained
+        consulta = "Categoria";
+    }//GEN-LAST:event_tfdCdCategoriaFocusGained
+
+    private void tfdCdLegendaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfdCdLegendaFocusLost
+        Legenda legenda = daoLegenda.consultaId(Integer.parseInt(tfdCdLegenda.getText()));
+        tfdLegenda.setText(legenda.getDescricao());
+        tfdCdClassificacao.requestFocus();
+    }//GEN-LAST:event_tfdCdLegendaFocusLost
+
+    private void tfdCdClassificacaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfdCdClassificacaoFocusLost
+        Classificacao classificacao = daoClassificacao.consultaId(Integer.parseInt(tfdCdClassificacao.getText()));
+        tfdClassificacao.setText(classificacao.getDescricao());
+        tfdCdCategoria.requestFocus();
+    }//GEN-LAST:event_tfdCdClassificacaoFocusLost
+
+    private void tfdCdCategoriaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfdCdCategoriaFocusLost
+        Categoria categoria = daoCategoria.consultaId(Integer.parseInt(tfdCdCategoria.getText()));
+        tfdCategoria.setText(categoria.getDescricao());
+        btnSalvar.requestFocus();
+    }//GEN-LAST:event_tfdCdCategoriaFocusLost
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnFechar;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JComboBox<Categoria> cbxCategoria;
-    private javax.swing.JComboBox<Classificacao> cbxClassificacao;
-    private javax.swing.JComboBox<Idioma> cbxIdioma;
-    private javax.swing.JComboBox<Legenda> cbxLegenda;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -602,7 +627,15 @@ public class IfrFilme extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblMensagem;
     private javax.swing.JTable tblFilme;
     private javax.swing.JTextField tfdBuscar;
+    private javax.swing.JTextField tfdCategoria;
+    private javax.swing.JTextField tfdCdCategoria;
+    private javax.swing.JTextField tfdCdClassificacao;
+    private javax.swing.JTextField tfdCdIdioma;
+    private javax.swing.JTextField tfdCdLegenda;
+    private javax.swing.JTextField tfdClassificacao;
     private javax.swing.JTextField tfdDuracao;
+    private javax.swing.JTextField tfdIdioma;
+    private javax.swing.JTextField tfdLegenda;
     private javax.swing.JTextField tfdNome;
     private javax.swing.JTextField tfdValor;
     // End of variables declaration//GEN-END:variables
