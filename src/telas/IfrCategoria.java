@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package telas;
 
 import daos.DaoGenerico;
 import entidades.Categoria;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -14,13 +10,13 @@ import javax.swing.table.DefaultTableModel;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.apache.log4j.Logger;
 
-/**
- *
- * @author estel
- */
 public class IfrCategoria extends javax.swing.JInternalFrame {
 
+    private org.apache.log4j.Logger logger = Logger.getLogger(IfrCategoria.class.getName());
+    LocalDateTime agora = LocalDateTime.now();
+    
     int codigo = 0;
 
     /**
@@ -57,6 +53,7 @@ public class IfrCategoria extends javax.swing.JInternalFrame {
             }
         } catch (HibernateException hibEx) {
             hibEx.printStackTrace();
+            logger.error(agora+" ERROR: Erro ao carregar tabela! --  Tela de Cadasto de Categoria");
         }
 
         // permite seleção de apenas uma linha da tabela
@@ -260,6 +257,7 @@ public class IfrCategoria extends javax.swing.JInternalFrame {
             }
         } catch (HibernateException hibEx) {
             hibEx.printStackTrace();
+            logger.error(agora+" ERROR: Erro ao pesquisar dados! --  Tela de Cadastro de Categoria");
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -274,6 +272,7 @@ public class IfrCategoria extends javax.swing.JInternalFrame {
                 inicia();
             } catch (HibernateException hibEx) {
                 hibEx.printStackTrace();
+                logger.error(agora+" ERROR: Erro ao salvar os dados! --  Tela de Cadastro de Categoria");
             }    
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -308,6 +307,7 @@ public class IfrCategoria extends javax.swing.JInternalFrame {
             }
         } catch (HibernateException hibEx) {
             hibEx.printStackTrace();
+            logger.error(agora+" ERROR: Erro ao excluir os dados! --  Tela de Cadastro de Categoria");
         }
         inicia();
     }//GEN-LAST:event_btnExcluirActionPerformed

@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package telas;
 
 import daos.DaoGenerico;
 import entidades.Poltrona;
 import entidades.Sala;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -16,13 +12,13 @@ import javax.swing.table.DefaultTableModel;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.apache.log4j.Logger;
 
-/**
- *
- * @author estel
- */
 public class IfrSala extends javax.swing.JInternalFrame {
 
+    private org.apache.log4j.Logger logger = Logger.getLogger(IfrSala.class.getName());
+    LocalDateTime agora = LocalDateTime.now();
+    
     int codigo = 0;
 
     /**
@@ -56,6 +52,7 @@ public class IfrSala extends javax.swing.JInternalFrame {
             }
         } catch (HibernateException hibEx) {
             hibEx.printStackTrace();
+            logger.error(agora+" ERROR: Erro ao preencher dados! --  Tela de Cadastro de Salas");
         }
 
         // permite seleção de apenas uma linha da tabela
@@ -316,6 +313,7 @@ public class IfrSala extends javax.swing.JInternalFrame {
             }
         } catch (HibernateException hibEx) {
             hibEx.printStackTrace();
+            logger.error(agora+" ERROR: Erro ao excluir dados! --  Tela de Cadastro de Salas");
         }
         resultado = null;
         sessao = null;
@@ -335,6 +333,7 @@ public class IfrSala extends javax.swing.JInternalFrame {
             }
         } catch (HibernateException hibEx) {
             hibEx.printStackTrace();
+            logger.error(agora+" ERROR: Erro ao excluir dados! --  Tela de Cadastro de Salas");
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
@@ -358,6 +357,7 @@ public class IfrSala extends javax.swing.JInternalFrame {
                 }
             } catch (HibernateException hibEx) {
                 hibEx.printStackTrace();
+                logger.error(agora+" ERROR: Erro ao salvar dados! --  Tela de Cadastro de Salas");
             }
             for (int linha = 0; linha < tblPoltronas.getRowCount(); linha++) {
                 Poltrona poltrona = new Poltrona();
@@ -372,6 +372,7 @@ public class IfrSala extends javax.swing.JInternalFrame {
             inicia();
         } catch (HibernateException hibEx) {
             hibEx.printStackTrace();
+            logger.error(agora+" ERROR: Erro ao salvar dados! --  Tela de Cadastro de Salas");
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -395,6 +396,7 @@ public class IfrSala extends javax.swing.JInternalFrame {
             }
         } catch (HibernateException hibEx) {
             hibEx.printStackTrace();
+            logger.error(agora+" ERROR: Erro ao buscar dados! --  Tela de Cadastro de Salas");
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -423,6 +425,7 @@ public class IfrSala extends javax.swing.JInternalFrame {
             }
         } catch (HibernateException hibEx) {
             hibEx.printStackTrace();
+            logger.error(agora+" ERROR: Erro ao pesquisar dados! --  Tela de Cadastro de Salas");
         }
         tfdDescricao.setText(descricao);
         jTabbedPane1.setSelectedIndex(0);

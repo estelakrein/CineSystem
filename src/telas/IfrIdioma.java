@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package telas;
 
 import entidades.Idioma;
 import daos.DaoGenerico;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -14,16 +10,16 @@ import javax.swing.table.DefaultTableModel;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.apache.log4j.Logger;
 
-/**
- *
- * @author estel
- */
 public class IfrIdioma extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form IfrIdioma
      */
+    private org.apache.log4j.Logger logger = Logger.getLogger(IfrIdioma.class.getName());
+    LocalDateTime agora = LocalDateTime.now();
+    
     int codigo = 0;
 
     public IfrIdioma() {
@@ -58,6 +54,7 @@ public class IfrIdioma extends javax.swing.JInternalFrame {
             }
         } catch (HibernateException hibEx) {
             hibEx.printStackTrace();
+            logger.error(agora+" ERROR: Erro ao preencher tabela! --  Tela de Cadastro de Idioma");
         }
 
         // permite seleção de apenas uma linha da tabela
@@ -269,6 +266,7 @@ public class IfrIdioma extends javax.swing.JInternalFrame {
             }
         } catch (HibernateException hibEx) {
             hibEx.printStackTrace();
+            logger.error(agora+" ERROR: Erro ao buscar dados! --  Tela de Cadastro de Idiomas");
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -282,6 +280,7 @@ public class IfrIdioma extends javax.swing.JInternalFrame {
                 inicia();
             } catch (HibernateException hibEx) {
                 hibEx.printStackTrace();
+                logger.error(agora+" ERROR: Erro ao salvar dados! --  Tela de Cadastro de Idiomas");
             }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -319,6 +318,7 @@ public class IfrIdioma extends javax.swing.JInternalFrame {
             }
         } catch (HibernateException hibEx) {
             hibEx.printStackTrace();
+            logger.error(agora+" ERROR: Erro ao excluir dados! --  Tela de Cadastro de Idiomas");
         }
         inicia();
     }//GEN-LAST:event_btnExcluirActionPerformed

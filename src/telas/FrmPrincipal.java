@@ -1,18 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package telas;
 
+import apoio.ConnectionFactory;
 import entidades.Usuario;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
+import apoio.DB_Connection;
+import java.time.LocalDateTime;
+import org.apache.log4j.Logger;
 
-/**
- *
- * @author estel
- */
 public class FrmPrincipal extends javax.swing.JFrame {
 
+    private org.apache.log4j.Logger logger = Logger.getLogger(FrmPrincipal.class.getName());
+    LocalDateTime agora = LocalDateTime.now();
     
     private Usuario usuarios;
     /**
@@ -58,8 +63,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
+        jMenuItem15 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem12 = new javax.swing.JMenuItem();
+        jMenuItem13 = new javax.swing.JMenuItem();
 
         jMenuItem9.setText("jMenuItem9");
 
@@ -167,12 +175,31 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenuItem7.setText("Log de erros");
         jMenu3.add(jMenuItem7);
 
+        jMenuItem14.setText("jMenuItem14");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem14);
+
+        jMenuItem15.setText("jMenuItem15");
+        jMenu3.add(jMenuItem15);
+
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Relatórios");
 
         jMenuItem12.setText("Listagem de sessões");
         jMenu4.add(jMenuItem12);
+
+        jMenuItem13.setText("Auditoria");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem13);
 
         jMenuBar1.add(jMenu4);
 
@@ -223,7 +250,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        // TODO add your handling code here:
+        IfrAuditoria ifrAuditoria = new IfrAuditoria();
+        jDesktopPane1.add(ifrAuditoria);
+        ifrAuditoria.setVisible(true);     
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
@@ -243,6 +272,31 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jDesktopPane1.add(ifrUsuario);
         ifrUsuario.setVisible(true);
     }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+           try {
+            // Compila o relatorio
+            JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/Auditoria.jrxml"));
+
+            // Mapeia campos de parametros para o relatorio, mesmo que nao existam
+            Map parametros = new HashMap();
+
+            // Executa relatorio
+            JasperPrint impressao = JasperFillManager.fillReport(relatorio, parametros, ConnectionFactory.getConnection());
+
+            // Exibe resultado em video
+            JasperViewer.viewReport(impressao, false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao gerar relatório: " + e);
+            logger.error(agora+" ERROR: Erro ao gerar relatório de Auditoria! --  Tela Principal");
+        }
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
+
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        IfrLog ifrLog = new IfrLog();
+        jDesktopPane1.add(ifrLog);
+        ifrLog.setVisible(true); 
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -290,6 +344,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

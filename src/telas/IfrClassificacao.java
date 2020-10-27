@@ -2,6 +2,7 @@ package telas;
 
 import daos.DaoGenerico;
 import entidades.Classificacao;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -9,12 +10,13 @@ import javax.swing.table.DefaultTableModel;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-/**
- *
- * @author estel
- */
+import org.apache.log4j.Logger;
+
 public class IfrClassificacao extends javax.swing.JInternalFrame {
 
+    private org.apache.log4j.Logger logger = Logger.getLogger(IfrClassificacao.class.getName());
+    LocalDateTime agora = LocalDateTime.now();
+    
     int codigo = 0;
     /**
      * Creates new form IfrClassificacao
@@ -50,6 +52,7 @@ public class IfrClassificacao extends javax.swing.JInternalFrame {
             }
         } catch (HibernateException hibEx) {
             hibEx.printStackTrace();
+            logger.error(agora+" ERROR: Erro ao preencher tabela! --  Tela de Cadastro de Classificação");
         }
 
         // permite seleção de apenas uma linha da tabela
@@ -247,6 +250,7 @@ public class IfrClassificacao extends javax.swing.JInternalFrame {
             }
         } catch (HibernateException hibEx) {
             hibEx.printStackTrace();
+            logger.error(agora+" ERROR: Erro ao excluir dados! --  Tela de Cadastro de Classificação");
         }
         inicia();
     }//GEN-LAST:event_btnExcluirActionPerformed
@@ -262,6 +266,7 @@ public class IfrClassificacao extends javax.swing.JInternalFrame {
                 inicia();
             } catch (HibernateException hibEx) {
                 hibEx.printStackTrace();
+                logger.error(agora+" ERROR: Erro ao salvar dados! --  Tela de Cadastro de Classificação");
             }
     }//GEN-LAST:event_btnSalvarActionPerformed
 

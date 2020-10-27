@@ -1,50 +1,74 @@
-
 package daos;
 
-import apoio.ConectionFactory;
 import entidades.Auditoria;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import static javassist.CtMethod.ConstParameter.string;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import telas.HibernateUtil;
 
 public class DaoAuditoria {
-  public List<Auditoria> read(){
-      Connection con = ConectionFactory.getConnection();
-      PreparedStatement stmt = null;
-      ResultSet rs = null;
-      
-      List<Auditoria> auditoria = new ArrayList<>();
-      
-      try {
-          stmt = con.prepareStatement("SELECT log_id, tabela, new_codigo, old_codigo, new_valor, old_valor FROM auditoria");
-          rs = stmt.executeQuery();
-          
-          while(rs.next()){
-                Auditoria audit = new Auditoria();
-              
-                audit.setLog_id(rs.getInt("log_id"));
-                audit.setTabela(rs.getString("tabela"));
-                audit.setNew_codigo(rs.getInt("new_codigo"));
-                audit.setOd_codigo(rs.getInt("old_codigo"));
-                audit.setNew_valor(rs.getDouble("new_valor"));
-                audit.setOd_valor(rs.getDouble("old_valor"));
-                
-                
-                auditoria.add(audit);
-          }
-          
-      } catch (SQLException ex) {
-          Logger.getLogger(DaoAuditoria.class.getName()).log(Level.SEVERE, null, ex);
-      }finally{
-          ConectionFactory.closeConnection(con, stmt, rs);
-      }
-      return auditoria;
-  }  
+    
+    public Auditoria consultaId(int id){
+            
+        Auditoria obj = new Auditoria();
+        String sql = "FROM auditoria " + "WHERE log_id = " + id;
+        try {
+            Session sessao = HibernateUtil.getSessionFactory().openSession();
+            org.hibernate.Query query = sessao.createQuery(sql);
+            List<Auditoria> resultado = new ArrayList();
+            resultado = query.list();
+            obj = resultado.get(0);
+        } catch (HibernateException hibEx) {
+            hibEx.printStackTrace();
+        }
+            return obj;
+    }
+    
+    public List<Auditoria> consultaTodos(){
+        List<Auditoria> resultado = new ArrayList();
+        String sql = "FROM auditoria ORDER BY log_id";
+        try {
+            Session sessao = HibernateUtil.getSessionFactory().openSession();
+            org.hibernate.Query query = sessao.createQuery(sql);
+            resultado = query.list();
+        } catch (HibernateException hibEx) {
+            hibEx.printStackTrace();
+        }
+        return resultado;
+    }
+        
+        public List<Auditoria> consultaParam(String param){
+        List<Auditoria> resultado = new ArrayList();
+        String sql = "FROM auditoria "
+                + "WHERE acao LIKE '%" + param + "%' "
+                + "ORDER BY log_id";
+        
+        try {
+            Session sessao = HibernateUtil.getSessionFactory().openSession();
+            org.hibernate.Query query = sessao.createQuery(sql);
+            resultado = query.list();            
+        } catch (HibernateException hibEx) {
+            hibEx.printStackTrace();
+        }
+        return resultado;
+    } 
+        
+        public String exluir(Auditoria obj){
+        Session sessao = null;
+        try {
+            sessao = HibernateUtil.getSessionFactory().openSession();
+            Transaction transacao = sessao.beginTransaction();
+            
+                sessao.delete(obj);
+                transacao.commit();
+                return "Cadastro excluído com sucesso!";
+            
+        } catch (HibernateException hibEx) {
+            return hibEx.toString();
+        }
+    }    
+    
 }
