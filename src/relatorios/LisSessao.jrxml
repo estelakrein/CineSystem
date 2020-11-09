@@ -1,9 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4e220deb-6a62-4fee-acf9-1d9f9d2c4fe0">
-	<queryString language="SQL">
-		<![CDATA[Select sessao.codigo as cdSessao, horario, data, sessao.valor as valor, filme.nome as filme, sala.descricao as sala from sessao left join filme on codFilme = filme.codigo left join sala on codSala = sala.codigo]]>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="filme" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[Select sessao.codigo as cdSessao, sessao.horario, sessao.data, sessao.valor as valor, filme.nome as filme, sala.descricao as sala 
+from sessao left join filme on sessao.codFilme = filme.codigo left join sala on sessao.codSala = sala.codigo
+where sessao.codFilme = $P{filme};]]>
 	</queryString>
 	<field name="cdSessao" class="java.lang.Integer"/>
+	<field name="horario" class="java.sql.Time">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="data" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="valor" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="filme" class="java.lang.String"/>
+	<field name="sala" class="java.lang.String"/>
 	<group name="cdSessao">
 		<groupExpression><![CDATA[$F{cdSessao}]]></groupExpression>
 	</group>
@@ -11,24 +30,62 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch"/>
+		<band height="59" splitType="Stretch">
+			<staticText>
+				<reportElement x="226" y="14" width="100" height="20" uuid="cc8d97a0-5e9f-4940-a82d-48589f42dedb"/>
+				<text><![CDATA[Listagem de Sessões]]></text>
+			</staticText>
+		</band>
 	</title>
-	<pageHeader>
-		<band height="35" splitType="Stretch"/>
-	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch"/>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="7" y="9" width="56" height="20" uuid="4e613757-100b-4ceb-ae72-d579ed8245dd"/>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="92" y="9" width="76" height="20" uuid="44c007eb-e8b0-4703-a7bb-a3cf8fb7f24b"/>
+				<text><![CDATA[Horário]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="190" y="9" width="50" height="20" uuid="6d18298d-2eb1-4cda-a831-5aa878a70e91"/>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="262" y="9" width="100" height="20" uuid="d74ea6bc-7c49-467c-9e9e-40c1fb40bbfb"/>
+				<text><![CDATA[Filme]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="444" y="9" width="100" height="20" uuid="6d5c29f0-5700-4383-b45e-a2acd0e419e1"/>
+				<text><![CDATA[Sala]]></text>
+			</staticText>
+		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch"/>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="7" y="0" width="71" height="20" uuid="51a43dcd-091b-4bca-b493-677cf4ccf480"/>
+				<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="92" y="0" width="76" height="20" uuid="bdb59809-449b-45ad-a381-23f02a985896"/>
+				<textFieldExpression><![CDATA[$F{horario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="190" y="0" width="50" height="20" uuid="7f1b9c0b-cd98-4c7b-af39-c061e30af603"/>
+				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="262" y="0" width="165" height="20" uuid="81f4fee4-61f5-4053-ba87-c99ce7195710"/>
+				<textFieldExpression><![CDATA[$F{filme}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="444" y="0" width="100" height="20" uuid="ab7185cb-31c8-45bb-ab8c-fe1701d3eca1"/>
+				<textFieldExpression><![CDATA[$F{sala}]]></textFieldExpression>
+			</textField>
+		</band>
 	</detail>
 	<columnFooter>
 		<band height="45" splitType="Stretch"/>
 	</columnFooter>
-	<pageFooter>
-		<band height="54" splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>

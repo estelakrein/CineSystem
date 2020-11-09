@@ -11,6 +11,7 @@ import daos.DaoFilme;
 import daos.DaoIdioma;
 import daos.DaoLegenda;
 import daos.DaoSala;
+import daos.DaoSessao;
 import entidades.Categoria;
 import entidades.Classificacao;
 import entidades.Filme;
@@ -251,22 +252,22 @@ public class DlgConsulta extends javax.swing.JDialog {
             }
         }
         if (tabela == "Sessao") {
-//            List<Sessao> resultado = new ArrayList();
-//            tblPesquisa.getColumnModel().getColumn(0).setPreferredWidth(50);
-//            tblPesquisa.getColumnModel().getColumn(1).setPreferredWidth(150);
-//            DefaultTableModel modelo = (DefaultTableModel) tblPesquisa.getModel();
-//            modelo.setNumRows(0);
-//            try {
-//                DaoClassificacao daoClassificacao = new DaoClassificacao();
-//                resultado = daoClassificacao.consultaParam(tfdPesquisar.getText());
-//                for (int i = 0; i < resultado.size(); i++) {
-//                    Classificacao clas = resultado.get(i);
-//                    modelo.addRow(new Object[]{clas.getCodigo(), clas.getDescricao()});
-//
-//                }
-//            } catch (HibernateException hibEx) {
-//                hibEx.printStackTrace();
-//            }
+            List<Sessao> resultado = new ArrayList();
+            tblPesquisa.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tblPesquisa.getColumnModel().getColumn(1).setPreferredWidth(150);
+            DefaultTableModel modelo = (DefaultTableModel) tblPesquisa.getModel();
+            modelo.setNumRows(0);
+            try {
+                DaoSessao daoSessao = new DaoSessao();
+                resultado = daoSessao.consultaFilme(tfdPesquisar.getText());
+                for (int i = 0; i < resultado.size(); i++) {
+                    Sessao sessao = resultado.get(i);
+                    modelo.addRow(new Object[]{sessao.getCodigo(), ((sessao.getData()).toString() + " " + (sessao.getHorario()).toString())});
+
+                }
+            } catch (HibernateException hibEx) {
+                hibEx.printStackTrace();
+            }
         }
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
