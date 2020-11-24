@@ -11,6 +11,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import apoio.ConnectionFactory;
+import apoio.DB_Connection;
+import daos.DaoAuditoria;
+import entidades.Auditoria;
+
 @Entity
 @Table(name = "auditoria")
 
