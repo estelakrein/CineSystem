@@ -62,7 +62,7 @@ public class ConnectionFactory {
         return getConnection(
                 "jdbc:mysql://localhost/cinesystem",
                 "root",
-                "1234" );
+                "Spsinf" );
 
     }
         

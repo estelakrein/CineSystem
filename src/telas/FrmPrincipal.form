@@ -127,6 +127,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Log de erros"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem7ActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem14">
               <Properties>
@@ -156,7 +159,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem12ActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem14">
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem16">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de Vendas"/>
               </Properties>
@@ -164,12 +167,12 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem14ActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem13">
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem17">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Auditoria"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem13ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem17ActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

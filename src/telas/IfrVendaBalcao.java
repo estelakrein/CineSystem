@@ -13,6 +13,7 @@ import entidades.Poltrona;
 import entidades.Sala;
 import entidades.Sessao;
 import entidades.Venda;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -23,11 +24,10 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.apache.log4j.Logger;
 
 public class IfrVendaBalcao extends javax.swing.JInternalFrame {
 
-    private org.apache.log4j.Logger logger = Logger.getLogger(IfrVendaBalcao.class.getName());
+    private org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(IfrVendaBalcao.class.getName());
     LocalDateTime agora = LocalDateTime.now();
     
     public String consulta = "";
@@ -697,7 +697,7 @@ public class IfrVendaBalcao extends javax.swing.JInternalFrame {
         } catch (HibernateException hibEx) {
             hibEx.printStackTrace();
         } catch (MessagingException ex) {
-            Logger.getLogger(IfrVendaBalcao.class.getName()).log(Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(IfrVendaBalcao.class.getName()).log(Level.SEVERE, null, ex);
         }
         btnCancelarActionPerformed(evt);
 

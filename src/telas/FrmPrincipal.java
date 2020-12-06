@@ -75,8 +75,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenuItem15 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem14 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
+        jMenuItem16 = new javax.swing.JMenuItem();
+        jMenuItem17 = new javax.swing.JMenuItem();
 
         jMenuItem9.setText("jMenuItem9");
 
@@ -207,6 +207,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu3.add(jMenuItem6);
 
         jMenuItem7.setText("Log de erros");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem7);
 
         jMenuItem14.setText("jMenuItem14");
@@ -232,21 +237,21 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenu4.add(jMenuItem12);
 
-        jMenuItem14.setText("Relatório de Vendas");
-        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem16.setText("Relatório de Vendas");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem14ActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem14);
+        jMenu4.add(jMenuItem16);
 
-        jMenuItem13.setText("Auditoria");
-        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem17.setText("Auditoria");
+        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem13ActionPerformed(evt);
+                jMenuItem17ActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem13);
+        jMenu4.add(jMenuItem17);
 
         jMenuBar1.add(jMenu4);
 
@@ -320,17 +325,17 @@ public class FrmPrincipal extends javax.swing.JFrame {
         ifrUsuario.setVisible(true);
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
-    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {                                            
         IfrVendaBalcao ifrVendaBalcao = new IfrVendaBalcao();
         jDesktopPane1.add(ifrVendaBalcao);
         ifrVendaBalcao.setVisible(true);
-    }//GEN-LAST:event_jMenuItem13ActionPerformed
+    }                                           
 
-    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {                                            
         IfrRelVendas ifrRelVendas = new IfrRelVendas();
         jDesktopPane1.add(ifrRelVendas);
         ifrRelVendas.setVisible(true);
-    }//GEN-LAST:event_jMenuItem14ActionPerformed
+    }                                           
 
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
         IfrRelSessao ifrRelSessao = new IfrRelSessao();
@@ -338,31 +343,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         ifrRelSessao.setVisible(true);
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
-    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
-           try {
-            // Compila o relatorio
-            JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/Auditoria.jrxml"));
-
-            // Mapeia campos de parametros para o relatorio, mesmo que nao existam
-            Map parametros = new HashMap();
-
-            // Executa relatorio
-            JasperPrint impressao = JasperFillManager.fillReport(relatorio, parametros, ConnectionFactory.getConnection());
-
-            // Exibe resultado em video
-            JasperViewer.viewReport(impressao, false);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao gerar relatório: " + e);
-            logger.error(agora+" ERROR: Erro ao gerar relatório de Auditoria! --  Tela Principal");
-        }
-    }//GEN-LAST:event_jMenuItem13ActionPerformed
-
-    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
-        IfrLog ifrLog = new IfrLog();
-        jDesktopPane1.add(ifrLog);
-        ifrLog.setVisible(true); 
-    }//GEN-LAST:event_jMenuItem14ActionPerformed
-
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
             try {
             String query="Select nome, duracao from filme";
@@ -379,6 +360,31 @@ public class FrmPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        IfrLog ifrLog = new IfrLog();
+        jDesktopPane1.add(ifrLog);
+        ifrLog.setVisible(true); 
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+        try {
+            // Compila o relatorio
+            JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/Auditoria.jrxml"));
+
+            // Mapeia campos de parametros para o relatorio, mesmo que nao existam
+            Map parametros = new HashMap();
+
+            // Executa relatorio
+            JasperPrint impressao = JasperFillManager.fillReport(relatorio, parametros, ConnectionFactory.getConnection());
+
+            // Exibe resultado em video
+            JasperViewer.viewReport(impressao, false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao gerar relatório: " + e);
+            logger.error(agora+" ERROR: Erro ao gerar relatório de Auditoria! --  Tela Principal");
+        }
+    }//GEN-LAST:event_jMenuItem17ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -430,6 +436,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
+    private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

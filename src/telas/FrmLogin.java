@@ -82,8 +82,6 @@ public class FrmLogin extends javax.swing.JFrame {
         tfdUsuario = new javax.swing.JTextField();
         pfdSenha = new javax.swing.JPasswordField();
         btnEntrar = new javax.swing.JButton();
-        btnExcel = new javax.swing.JButton();
-        btnRelatorio1 = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
@@ -99,20 +97,6 @@ public class FrmLogin extends javax.swing.JFrame {
         btnEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEntrarActionPerformed(evt);
-            }
-        });
-
-        btnExcel.setText("Exportar Tabela Completa Excel");
-        btnExcel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExcelActionPerformed(evt);
-            }
-        });
-
-        btnRelatorio1.setText("Gerar Relatório PDF");
-        btnRelatorio1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRelatorio1ActionPerformed(evt);
             }
         });
 
@@ -137,10 +121,7 @@ public class FrmLogin extends javax.swing.JFrame {
                                     .addComponent(tfdUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                                     .addComponent(pfdSenha)))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(btnRelatorio1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnExcel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(78, 78, 78)
+                                .addGap(293, 293, 293)
                                 .addComponent(btnEntrar)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -157,12 +138,8 @@ public class FrmLogin extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(pfdSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnExcel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEntrar)
-                    .addComponent(btnRelatorio1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addComponent(btnEntrar)
                 .addGap(18, 18, 18))
         );
 
@@ -184,167 +161,6 @@ public class FrmLogin extends javax.swing.JFrame {
             tfdUsuario.requestFocus();
         }
     }//GEN-LAST:event_btnEntrarActionPerformed
-
-    private void btnExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcelActionPerformed
-        JFileChooser excelFileChooser = new JFileChooser();
-        excelFileChooser.showSaveDialog(null);
-        try {
-            PrintWriter pw= new PrintWriter(new File("C:\\Users\\Acer\\Documents\\NetBeansProjects\\auditoria.csv"));
-            StringBuilder sb=new StringBuilder();
-
-            Connection connection=null;
-            DB_Connection obj_DB_Connection=new DB_Connection();
-            connection=obj_DB_Connection.getConnection();
-            ResultSet rs=null;
-
-            String query="select * from auditoria";
-            PreparedStatement ps=connection.prepareStatement(query);
-            rs=ps.executeQuery();
-
-            while(rs.next()){
-                sb.append(rs.getString("log_id"));
-                sb.append(",");
-                sb.append(rs.getString("tabela"));
-                sb.append(",");
-                sb.append(rs.getString("new_codigo"));
-                sb.append(",");
-                sb.append(rs.getString("old_codigo"));
-                sb.append(",");
-                sb.append(rs.getString("new_dia"));
-                sb.append(",");
-                sb.append(rs.getString("old_dia"));
-                sb.append(",");
-                sb.append(rs.getString("new_valor"));
-                sb.append(",");
-                sb.append(rs.getString("old_valor"));
-                sb.append(",");
-                sb.append(rs.getString("new_idioma"));
-                sb.append(",");
-                sb.append(rs.getString("old_idioma"));
-                sb.append(",");
-                sb.append(rs.getString("new_descricao"));
-                sb.append(",");
-                sb.append(rs.getString("old_descricao"));
-                sb.append(",");
-                sb.append(rs.getString("new_nome"));
-                sb.append(",");
-                sb.append(rs.getString("old_nome"));
-                sb.append(",");
-                sb.append(rs.getString("new_codIdioma"));
-                sb.append(",");
-                sb.append(rs.getString("old_codIdioma"));
-                sb.append(",");
-                sb.append(rs.getString("new_codClassificacao"));
-                sb.append(",");
-                sb.append(rs.getString("old_codClassificacao"));
-                sb.append(",");
-                sb.append(rs.getString("new_codLegenda"));
-                sb.append(",");
-                sb.append(rs.getString("old_codLegenda"));
-                sb.append(",");
-                sb.append(rs.getString("new_codCategoria"));
-                sb.append(",");
-                sb.append(rs.getString("old_codCategoria"));
-                sb.append(",");
-                sb.append(rs.getInt("new_cpf"));
-                sb.append(",");
-                sb.append(rs.getInt("old_cpf"));
-                sb.append(",");
-                sb.append(rs.getString("new_permissoes"));
-                sb.append(",");
-                sb.append(rs.getString("old_permissoes"));
-                sb.append(",");
-                sb.append(rs.getDate("new_horario"));
-                sb.append(",");
-                sb.append(rs.getDate("old_horario"));
-                sb.append(",");
-                sb.append(rs.getString("new_codSala"));
-                sb.append(",");
-                sb.append(rs.getString("old_codSala"));
-                sb.append(",");
-                sb.append(rs.getString("new_codFilme"));
-                sb.append(",");
-                sb.append(rs.getString("old_codFilme"));
-                sb.append(",");
-                sb.append(rs.getInt("new_fileira"));
-                sb.append(",");
-                sb.append(rs.getInt("old_fileira"));
-                sb.append(",");
-                sb.append(rs.getString("new_numero"));
-                sb.append(",");
-                sb.append(rs.getString("old_numero"));
-                sb.append(",");
-                sb.append(rs.getString("new_codSessao"));
-                sb.append(",");
-                sb.append(rs.getString("old_codSessao"));
-                sb.append(",");
-                sb.append(rs.getString("new_codPoltrona"));
-                sb.append(",");
-                sb.append(rs.getString("old_codPoltrona"));
-                sb.append(",");
-                sb.append(rs.getString("new_emissao"));
-                sb.append(",");
-                sb.append(rs.getString("old_emissao"));
-                sb.append(",");
-                sb.append(rs.getString("new_total"));
-                sb.append(",");
-                sb.append(rs.getString("old_total"));
-                sb.append(",");
-                sb.append(rs.getString("new_cpfCliente"));
-                sb.append(",");
-                sb.append(rs.getString("old_cpfCliente"));
-                sb.append(",");
-                sb.append(rs.getString("new_codUsuario"));
-                sb.append(",");
-                sb.append(rs.getString("old_codUsuario"));
-                sb.append(",");
-                sb.append(rs.getString("new_codVenda"));
-                sb.append(",");
-                sb.append(rs.getString("old_codVenda"));
-                sb.append(",");
-                sb.append(rs.getString("new_codIngresso"));
-                sb.append(",");
-                sb.append(rs.getString("old_codIngresso"));
-                sb.append(",");
-                sb.append(rs.getString("new_duracao"));
-                sb.append(",");
-                sb.append(rs.getString("old_duracao"));
-                sb.append(",");
-                sb.append(rs.getString("acao"));
-                sb.append(",");
-                sb.append(rs.getString("usuario"));
-                sb.append(",");
-                sb.append(rs.getString("hora"));
-                sb.append("\r\n");
-            }
-
-            pw.write(sb.toString());
-            pw.close();
-            System.out.println("finished");
-
-        } catch (Exception e) {
-            logger.error(agora+" ERROR: Erro ao exportar planilha EXCEL! --  Tela de Auditoria");
-        }
-    }//GEN-LAST:event_btnExcelActionPerformed
-
-    private void btnRelatorio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatorio1ActionPerformed
-        try {
-            // Compila o relatorio
-            JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/Auditoria.jrxml"));
-
-            // Mapeia campos de parametros para o relatorio, mesmo que nao existam
-            Map parametros = new HashMap();
-
-            // Executa relatorio
-            JasperPrint impressao = JasperFillManager.fillReport(relatorio, parametros, ConnectionFactory.getConnection());
-
-            // Exibe resultado em video
-            JasperViewer.viewReport(impressao, false);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao gerar relatório: " + e);
-            logger.error(agora+" ERROR: Erro ao gerar relatório!  --  Tela Principal");
-        }
-    }//GEN-LAST:event_btnRelatorio1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -383,8 +199,6 @@ public class FrmLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEntrar;
-    private javax.swing.JButton btnExcel;
-    private javax.swing.JButton btnRelatorio1;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
