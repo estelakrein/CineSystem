@@ -32,8 +32,6 @@ public class Venda implements Serializable{
     private GregorianCalendar data;
     @Column(name = "total")
     private double total;
-    @Column(name = "cpfCliente")
-    private String cfp;
     @Column(name = "codUsuario")
     private int usuario;
 
@@ -77,20 +75,6 @@ public class Venda implements Serializable{
      */
     public void setTotal(double total) {
         this.total = total;
-    }
-
-    /**
-     * @return the cfp
-     */
-    public String getCfp() {
-        return cfp;
-    }
-
-    /**
-     * @param cfp the cfp to set
-     */
-    public void setCfp(String cfp) {
-        this.cfp = cfp;
     }
 
     /**

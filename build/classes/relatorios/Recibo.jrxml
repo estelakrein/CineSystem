@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="709c6b26-7a98-433e-82ff-cf5f9c61baf2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="numNota" class="java.lang.String">
+		<defaultValueExpression><![8]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[Select numero, emissao, total, codSala, horario, data, nome, codPoltrona from venda left join ingresso on numero = codVenda left join sessao on codSessao = sessao.codigo left join filme on codFilme = filme.codigo where numero = $P{numNota}]]>
+	</queryString>
+	<field name="numero" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="emissao" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codSala" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="horario" class="java.sql.Time">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="data" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codPoltrona" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="48" y="20" width="129" height="20" uuid="cc4cc974-53c4-4bf3-a699-319037da48a0"/>
+				<text><![CDATA[RECIBO DE INGRESSOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="307" y="0" width="100" height="20" uuid="f4067410-ac24-4d9d-9a7b-7c5ff5d98fb5"/>
+				<text><![CDATA[Numero]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="307" y="20" width="100" height="20" uuid="c97b95d9-a757-4028-8f99-a08bc26a5f6d"/>
+				<text><![CDATA[Emissão]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="307" y="40" width="100" height="20" uuid="79f3baae-57e3-4972-9e4c-54c4539438f9"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="366" y="0" width="100" height="20" uuid="351a99bf-90a8-43eb-baa3-dca623bde4f6"/>
+				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="366" y="20" width="100" height="20" uuid="c021cd46-cd32-4392-a9d4-7cf175340947"/>
+				<textFieldExpression><![CDATA[$F{emissao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="366" y="40" width="100" height="20" uuid="38a9a10f-9d57-43aa-b938-d34bafcd05a9"/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="70" height="20" uuid="08bb9391-28b2-4c42-a636-c56724f27283"/>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="83" y="0" width="57" height="20" uuid="3ef6c524-a6dc-4cf4-9341-dd685e5005f1"/>
+				<text><![CDATA[Horário]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="152" y="0" width="214" height="20" uuid="108926e1-7371-4532-8f18-cb97f1fdfa46"/>
+				<text><![CDATA[Filme]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="379" y="0" width="63" height="20" uuid="d6507db6-2cf4-4e8a-a37f-d564def85d30"/>
+				<text><![CDATA[Sala]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="454" y="0" width="77" height="20" uuid="2c4e82b4-19cd-42bb-badc-fd1d59cff42c"/>
+				<text><![CDATA[Poltrona]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="4" width="70" height="20" uuid="308a6f0c-4f91-4acb-8845-a357a2dbf36f"/>
+				<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="83" y="4" width="57" height="20" uuid="72e8e77f-676a-49dd-833f-3541658171a7"/>
+				<textFieldExpression><![CDATA[$F{horario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="152" y="4" width="214" height="20" uuid="85dfdb49-d163-426d-97d7-e3790db4d4a9"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="379" y="4" width="63" height="20" uuid="5dde4158-aea5-4ac5-b96c-ce096aa49cb2"/>
+				<textFieldExpression><![CDATA[$F{codSala}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="454" y="4" width="77" height="20" uuid="2fb8a34f-1b9e-47ed-996e-aef756ef5a96"/>
+				<textFieldExpression><![CDATA[$F{codPoltrona}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="36" splitType="Stretch">
+			<staticText>
+				<reportElement x="204" y="11" width="145" height="20" uuid="c3f907e8-513b-43da-bdd1-dd6595f05217"/>
+				<text><![CDATA[Desenvolvido por CineSystem  Sistemas]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
