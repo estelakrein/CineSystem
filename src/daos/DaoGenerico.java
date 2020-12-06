@@ -1,6 +1,5 @@
 package daos;
 
-import com.sun.istack.internal.logging.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
