@@ -2,6 +2,10 @@ package telas;
 
 import apoio.ConnectionFactory;
 import entidades.Usuario;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
@@ -362,9 +366,18 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        IfrLog ifrLog = new IfrLog();
-        jDesktopPane1.add(ifrLog);
-        ifrLog.setVisible(true); 
+//        IfrLog ifrLog = new IfrLog();
+//        jDesktopPane1.add(ifrLog);
+//        ifrLog.setVisible(true); 
+        
+        Path caminho = Paths.get("C:/Users/Acer/Documents/NetBeansProjects/CineSystem/exemplo.log");
+            try {
+                byte[] texto = Files.readAllBytes(caminho);
+                String leitura = new String(texto);
+                JOptionPane.showMessageDialog(null, leitura);
+            } catch (IOException erro) {
+                JOptionPane.showMessageDialog(null, "Erro ao gerar arquivo: " + erro);
+            }
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed

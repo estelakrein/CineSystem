@@ -7,6 +7,7 @@ package telas;
 
 import apoio.ConnectionFactory;
 import apoio.DB_Connection;
+import comunicacaoserial.ArduinoSerial;
 import daos.DaoUsuario;
 import static entidades.Auditoria_.hora;
 import entidades.Idioma;
@@ -52,6 +53,7 @@ public class FrmLogin extends javax.swing.JFrame {
     LocalDateTime agora = LocalDateTime.now();
 
     public Usuario usuarios;
+    ArduinoSerial arduino = new ArduinoSerial("COM6");
 
     /**
      * Creates new form FrmLogin
@@ -64,6 +66,7 @@ public class FrmLogin extends javax.swing.JFrame {
 
     public FrmLogin() {
         initComponents();
+        arduino.initialize();
     }
 
     /**
@@ -82,6 +85,7 @@ public class FrmLogin extends javax.swing.JFrame {
         tfdUsuario = new javax.swing.JTextField();
         pfdSenha = new javax.swing.JPasswordField();
         btnEntrar = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
@@ -97,6 +101,13 @@ public class FrmLogin extends javax.swing.JFrame {
         btnEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEntrarActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -121,7 +132,8 @@ public class FrmLogin extends javax.swing.JFrame {
                                     .addComponent(tfdUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                                     .addComponent(pfdSenha)))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(293, 293, 293)
+                                .addComponent(jButton2)
+                                .addGap(220, 220, 220)
                                 .addComponent(btnEntrar)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -139,7 +151,9 @@ public class FrmLogin extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(pfdSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                .addComponent(btnEntrar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEntrar)
+                    .addComponent(jButton2))
                 .addGap(18, 18, 18))
         );
 
@@ -160,7 +174,12 @@ public class FrmLogin extends javax.swing.JFrame {
             logger.error(agora+" ERROR: Usuário ou senha inválidos! --  Tela de Login");
             tfdUsuario.requestFocus();
         }
+        arduino.send("l");
     }//GEN-LAST:event_btnEntrarActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        arduino.send("d");
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -200,6 +219,7 @@ public class FrmLogin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEntrar;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
