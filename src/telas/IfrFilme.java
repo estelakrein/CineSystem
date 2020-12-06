@@ -68,7 +68,7 @@ public class IfrFilme extends javax.swing.JInternalFrame {
             resultado = daoFilme.consultaTodos();
             for (int i = 0; i < resultado.size(); i++) {
                 Filme filme = resultado.get(i);
-                modelo.addRow(new Object[]{filme.getCodigo(), filme.getNome(), filme.getDuracao(), filme.getValor(), filme.getIdioma().getIdioma(), filme.getCategoria().getDescricao()});
+                modelo.addRow(new Object[]{filme.getCodigo(), filme.getNome(), filme.getDuracao(), filme.getValor(), filme.getIdioma(), filme.getCategoria()});
 
             }
         } catch (HibernateException hibEx) {
@@ -428,16 +428,16 @@ public class IfrFilme extends javax.swing.JInternalFrame {
         tfdDuracao.setText(String.valueOf(filme.getDuracao()));
         tfdValor.setText(String.valueOf(filme.getValor()));
         tfdCdIdioma.setText(String.valueOf(filme.getIdioma()));
-        String dIdioma = daoIdioma.consultaId(filme.getIdioma().getCodigo()).getIdioma();
+        String dIdioma = daoIdioma.consultaId(filme.getIdioma()).getIdioma();
         tfdIdioma.setText(dIdioma);
         tfdCdLegenda.setText(String.valueOf(filme.getLegenda()));
-        String dLegenda = daoLegenda.consultaId(filme.getLegenda().getCodigo()).getDescricao();
+        String dLegenda = daoLegenda.consultaId(filme.getLegenda()).getDescricao();
         tfdLegenda.setText(dLegenda);
         tfdCdClassificacao.setText(String.valueOf(filme.getClassificacao()));
-        String dClassificacao = daoClassificacao.consultaId(filme.getClassificacao().getCodigo()).getDescricao();
+        String dClassificacao = daoClassificacao.consultaId(filme.getClassificacao()).getDescricao();
         tfdClassificacao.setText(dClassificacao);
         tfdCdCategoria.setText(String.valueOf(filme.getCategoria()));
-        String dCategoria = daoCategoria.consultaId(filme.getCategoria().getCodigo()).getDescricao();
+        String dCategoria = daoCategoria.consultaId(filme.getCategoria()).getDescricao();
         tfdCategoria.setText(dCategoria);
         jTabbedPane1.setSelectedIndex(0);
         tfdNome.requestFocus();
@@ -461,14 +461,10 @@ public class IfrFilme extends javax.swing.JInternalFrame {
             filme.setCodigo(codigo);
             filme.setNome(tfdNome.getText());
             filme.setDuracao(Integer.parseInt(tfdDuracao.getText()));
-            Categoria categoria = daoCategoria.consultaId(Integer.parseInt(tfdCdCategoria.getText()));
-            filme.setCategoria(categoria);
-            Classificacao classificacao = daoClassificacao.consultaId(Integer.parseInt(tfdCdClassificacao.getText()));
-            filme.setClassificacao(classificacao);
-            Idioma idioma = (Idioma) daoIdioma.consultaId(Integer.parseInt(tfdCdIdioma.getText()));
-            filme.setIdioma(idioma);
-            Legenda legenda = (Legenda) daoLegenda.consultaId(Integer.parseInt(tfdCdLegenda.getText()));
-            filme.setLegenda(legenda);
+            filme.setCategoria(Integer.parseInt(tfdCdCategoria.getText()));
+            filme.setClassificacao(Integer.parseInt(tfdCdClassificacao.getText()));
+            filme.setIdioma(Integer.parseInt(tfdCdIdioma.getText()));
+            filme.setLegenda(Integer.parseInt(tfdCdLegenda.getText()));
             filme.setValor(Double.parseDouble(tfdValor.getText()));
             result = DaoGenerico.getInstance().insert(filme);
             if (result) {
@@ -485,7 +481,7 @@ public class IfrFilme extends javax.swing.JInternalFrame {
 
     private String validarCampos() {
         String mensagem = "";
-        
+
         if (tfdNome.getText() == "") {
             tfdNome.setBackground(Color.YELLOW);
             tfdNome.requestFocus();
@@ -530,7 +526,7 @@ public class IfrFilme extends javax.swing.JInternalFrame {
             resultado = daoFilme.consultaParam(tfdBuscar.getText());
             for (int i = 0; i < resultado.size(); i++) {
                 Filme filme = resultado.get(i);
-                modelo.addRow(new Object[]{filme.getCodigo(), filme.getNome(), filme.getDuracao(), filme.getValor(), filme.getIdioma().getIdioma(), filme.getCategoria().getDescricao()});
+                modelo.addRow(new Object[]{filme.getCodigo(), filme.getNome(), filme.getDuracao(), filme.getValor(), filme.getIdioma(), filme.getCategoria()});
 
             }
         } catch (HibernateException hibEx) {

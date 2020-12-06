@@ -10,9 +10,15 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.view.JasperViewer;
-import apoio.DB_Connection;
 import java.time.LocalDateTime;
 import org.apache.log4j.Logger;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.data.jdbc.JDBCCategoryDataset;
 
 public class FrmPrincipal extends javax.swing.JFrame {
 
@@ -49,6 +55,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         jMenuItem9 = new javax.swing.JMenuItem();
         jDesktopPane1 = new javax.swing.JDesktopPane();
+        jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -60,6 +67,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItem13 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
@@ -67,22 +75,40 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenuItem15 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
+        jMenuItem16 = new javax.swing.JMenuItem();
+        jMenuItem17 = new javax.swing.JMenuItem();
 
         jMenuItem9.setText("jMenuItem9");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("CineSystem");
 
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bilhete.png"))); // NOI18N
+        jButton1.setText("FILMES EM CARTAZ:");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jDesktopPane1.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 834, Short.MAX_VALUE)
+            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(624, Short.MAX_VALUE))
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 439, Short.MAX_VALUE)
+            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(331, Short.MAX_VALUE))
         );
 
         jMenu1.setText("Cadastros");
@@ -160,6 +186,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem10);
 
+        jMenuItem13.setText("Venda de Ingressos");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem13);
+
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Gerenciamento");
@@ -173,6 +207,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu3.add(jMenuItem6);
 
         jMenuItem7.setText("Log de erros");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem7);
 
         jMenuItem14.setText("jMenuItem14");
@@ -191,15 +230,28 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu4.setText("Relatórios");
 
         jMenuItem12.setText("Listagem de sessões");
-        jMenu4.add(jMenuItem12);
-
-        jMenuItem13.setText("Auditoria");
-        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem13ActionPerformed(evt);
+                jMenuItem12ActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem13);
+        jMenu4.add(jMenuItem12);
+
+        jMenuItem16.setText("Relatório de Vendas");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem16);
+
+        jMenuItem17.setText("Auditoria");
+        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem17ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem17);
 
         jMenuBar1.add(jMenu4);
 
@@ -273,8 +325,50 @@ public class FrmPrincipal extends javax.swing.JFrame {
         ifrUsuario.setVisible(true);
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
-    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
-           try {
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        IfrVendaBalcao ifrVendaBalcao = new IfrVendaBalcao();
+        jDesktopPane1.add(ifrVendaBalcao);
+        ifrVendaBalcao.setVisible(true);
+    }                                           
+
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        IfrRelVendas ifrRelVendas = new IfrRelVendas();
+        jDesktopPane1.add(ifrRelVendas);
+        ifrRelVendas.setVisible(true);
+    }                                           
+
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        IfrRelSessao ifrRelSessao = new IfrRelSessao();
+        jDesktopPane1.add(ifrRelSessao);
+        ifrRelSessao.setVisible(true);
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
+
+    
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+            try {
+            String query="Select nome, duracao from filme";
+            JDBCCategoryDataset dataset = new JDBCCategoryDataset(ConnectionFactory.getConnection(), query);
+            JFreeChart chart = ChartFactory.createBarChart("Filmes", "nome", "duracao", dataset, PlotOrientation.VERTICAL, false, false, true);
+            BarRenderer renderer = null;
+            CategoryPlot plot = null;
+            renderer = new BarRenderer();
+            ChartFrame frame = new ChartFrame("Query Chart", chart);
+            frame.setVisible(true);
+            frame.setSize(800,650);
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        IfrLog ifrLog = new IfrLog();
+        jDesktopPane1.add(ifrLog);
+        ifrLog.setVisible(true); 
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+        try {
             // Compila o relatorio
             JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/Auditoria.jrxml"));
 
@@ -290,13 +384,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro ao gerar relatório: " + e);
             logger.error(agora+" ERROR: Erro ao gerar relatório de Auditoria! --  Tela Principal");
         }
-    }//GEN-LAST:event_jMenuItem13ActionPerformed
-
-    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
-        IfrLog ifrLog = new IfrLog();
-        jDesktopPane1.add(ifrLog);
-        ifrLog.setVisible(true); 
-    }//GEN-LAST:event_jMenuItem14ActionPerformed
+    }//GEN-LAST:event_jMenuItem17ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -334,6 +422,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -347,6 +436,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
+    private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

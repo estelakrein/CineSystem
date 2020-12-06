@@ -5,6 +5,7 @@
  */
 package entidades;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +21,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "usuario")
 
-public class Usuario {
+public class Usuario implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

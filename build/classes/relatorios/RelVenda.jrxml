@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b6460fc3-fba8-4ffb-aaaf-af6ad3410154">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="dataIni" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dataFin" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="filme" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT venda.numero as numero, venda.emissao as emissao, venda.total as total, filme.nome as filme 
+FROM venda LEFT JOIN ingresso ON venda.numero = ingresso.codVenda LEFT JOIN sessao ON sessao.codigo = ingresso.codSessao LEFT JOIN filme ON filme.codigo = sessao.codFilme
+WHERE venda.emissao >= $P{dataIni} and venda.emissao <= $P{dataFin} and filme.codigo = $P{filme};]]>
+	</queryString>
+	<field name="numero" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="emissao" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="filme" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="68" splitType="Stretch">
+			<staticText>
+				<reportElement x="229" y="12" width="100" height="20" uuid="f76fb28f-da35-42a5-978a-0e09a479ffa8"/>
+				<text><![CDATA[Relatório de Vendas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="389" y="32" width="87" height="20" uuid="4337c394-9b94-4831-8b72-573d677a94eb"/>
+				<text><![CDATA[Data do relatório:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="481" y="32" width="74" height="20" uuid="c6f3427e-4b21-412f-8bc9-507bcffc2f8f"/>
+				<text><![CDATA[Static text]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement x="19" y="3" width="65" height="20" uuid="29c9b718-9861-4efe-88bb-3cafaf77b1ab"/>
+				<text><![CDATA[Nº Venda]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="99" y="3" width="100" height="20" uuid="dcad2373-893c-4baf-b698-c8db64eb068e"/>
+				<text><![CDATA[Emissão]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="216" y="3" width="238" height="20" uuid="4d4aa5d1-18e6-4b5e-8c78-0162d8fdfc84"/>
+				<text><![CDATA[Filme]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="476" y="3" width="72" height="20" uuid="3d244320-1d2b-44b9-b208-8d891998cb71"/>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="19" y="0" width="65" height="20" uuid="2f820ae6-f047-48c1-9a0c-f8a812b25975"/>
+				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="99" y="0" width="100" height="20" uuid="2e0ec97c-b216-47eb-88c5-7c0e95f82ca7"/>
+				<textFieldExpression><![CDATA[$F{emissao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="216" y="0" width="238" height="20" uuid="936e9543-b6a1-4965-b0e7-472fd46aaa1b"/>
+				<textFieldExpression><![CDATA[$F{filme}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="476" y="0" width="72" height="20" uuid="0d6e5451-360e-4853-ad92-cb072db5dfdb"/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

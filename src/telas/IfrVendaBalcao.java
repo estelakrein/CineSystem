@@ -1,20 +1,46 @@
 package telas;
 
+import apoio.Formatacao;
 import daos.DaoFilme;
+import daos.DaoGenerico;
+import daos.DaoIngresso;
+import daos.DaoPoltrona;
+import daos.DaoSala;
+import daos.DaoSessao;
 import entidades.Filme;
+import entidades.Ingresso;
+import entidades.Poltrona;
+import entidades.Sala;
+import entidades.Sessao;
+import entidades.Venda;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.mail.MessagingException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.apache.log4j.Logger;
 
 public class IfrVendaBalcao extends javax.swing.JInternalFrame {
 
-    private org.apache.log4j.Logger logger = Logger.getLogger(IfrVendaBalcao.class.getName());
+    private org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(IfrVendaBalcao.class.getName());
     LocalDateTime agora = LocalDateTime.now();
     
     public String consulta = "";
     DaoFilme daoFilme = new DaoFilme();
+    DaoSessao daoSessao = new DaoSessao();
+    DaoSala daoSala = new DaoSala();
+    DaoIngresso daoIngresso = new DaoIngresso();
+    DaoPoltrona daoPoltrona = new DaoPoltrona();
+    List<Ingresso> ingressos = new ArrayList();
+    private Sessao sessaoSelec = new Sessao();
+    private Filme filmeSelec = new Filme();
+    private double valor;
+
     /**
      * Creates new form IfrVendaBalcao
      */
@@ -31,6 +57,7 @@ public class IfrVendaBalcao extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jCheckBox6 = new javax.swing.JCheckBox();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -44,25 +71,41 @@ public class IfrVendaBalcao extends javax.swing.JInternalFrame {
         btnProximo1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jLabel4 = new javax.swing.JLabel();
-        jCheckBox3 = new javax.swing.JCheckBox();
+        cbxA1 = new javax.swing.JCheckBox();
+        cbxA2 = new javax.swing.JCheckBox();
+        cbxA3 = new javax.swing.JCheckBox();
         btnProximo2 = new javax.swing.JButton();
+        cbxA4 = new javax.swing.JCheckBox();
+        cbxA5 = new javax.swing.JCheckBox();
+        cbxA6 = new javax.swing.JCheckBox();
+        cbxB1 = new javax.swing.JCheckBox();
+        cbxB2 = new javax.swing.JCheckBox();
+        cbxB3 = new javax.swing.JCheckBox();
+        cbxB4 = new javax.swing.JCheckBox();
+        cbxB5 = new javax.swing.JCheckBox();
+        cbxB6 = new javax.swing.JCheckBox();
+        cbxC1 = new javax.swing.JCheckBox();
+        cbxC2 = new javax.swing.JCheckBox();
+        cbxC3 = new javax.swing.JCheckBox();
+        cbxC4 = new javax.swing.JCheckBox();
+        cbxC5 = new javax.swing.JCheckBox();
+        cbxC6 = new javax.swing.JCheckBox();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPoltronas = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
         tfdTotal = new javax.swing.JTextField();
-        lblcpf = new javax.swing.JLabel();
-        ffdCpf = new javax.swing.JFormattedTextField();
         jLabel6 = new javax.swing.JLabel();
         tfdPagamento = new javax.swing.JTextField();
         tfdDesPagamento = new javax.swing.JTextField();
         btnFinalizar = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        tfdEmail = new javax.swing.JTextField();
         btnFechar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnConsultar = new javax.swing.JButton();
+
+        jCheckBox6.setText("jCheckBox6");
 
         jLabel1.setText("Filme");
 
@@ -87,6 +130,11 @@ public class IfrVendaBalcao extends javax.swing.JInternalFrame {
         });
 
         btnProximo1.setText("Próximo");
+        btnProximo1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProximo1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -142,15 +190,48 @@ public class IfrVendaBalcao extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Tela do filme");
 
-        jCheckBox1.setText("P1");
+        cbxA1.setText("A1");
 
-        jCheckBox2.setText("P2");
+        cbxA2.setText("A2");
 
-        jLabel4.setText("Corredor");
-
-        jCheckBox3.setText("P3");
+        cbxA3.setText("A3");
 
         btnProximo2.setText("Próximo");
+        btnProximo2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProximo2ActionPerformed(evt);
+            }
+        });
+
+        cbxA4.setText("A4");
+
+        cbxA5.setText("A5");
+
+        cbxA6.setText("A6");
+
+        cbxB1.setText("B1");
+
+        cbxB2.setText("B2");
+
+        cbxB3.setText("B3");
+
+        cbxB4.setText("B4");
+
+        cbxB5.setText("B5");
+
+        cbxB6.setText("B6");
+
+        cbxC1.setText("C1");
+
+        cbxC2.setText("C2");
+
+        cbxC3.setText("C3");
+
+        cbxC4.setText("C4");
+
+        cbxC5.setText("C5");
+
+        cbxC6.setText("C6");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -158,6 +239,9 @@ public class IfrVendaBalcao extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnProximo2))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -165,18 +249,37 @@ public class IfrVendaBalcao extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel3))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(92, 92, 92)
-                                .addComponent(jCheckBox1)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(cbxC1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbxB1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbxA1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox2)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(cbxC2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbxA2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbxB2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox3))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(239, 239, 239)
-                                .addComponent(jLabel4)))
-                        .addGap(0, 217, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnProximo2)))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(cbxC3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbxA3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbxB3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(87, 87, 87)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(cbxA4, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                                        .addComponent(cbxB4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(cbxC4, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(cbxA5, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+                                    .addComponent(cbxB5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbxC5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(cbxB6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbxC6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbxA6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(0, 74, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -186,12 +289,30 @@ public class IfrVendaBalcao extends javax.swing.JInternalFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jCheckBox2)
-                    .addComponent(jCheckBox3))
-                .addGap(83, 83, 83)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
+                    .addComponent(cbxA1)
+                    .addComponent(cbxA2)
+                    .addComponent(cbxA3)
+                    .addComponent(cbxA4)
+                    .addComponent(cbxA5)
+                    .addComponent(cbxA6))
+                .addGap(20, 20, 20)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbxB1)
+                    .addComponent(cbxB2)
+                    .addComponent(cbxB3)
+                    .addComponent(cbxB4)
+                    .addComponent(cbxB5)
+                    .addComponent(cbxB6))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cbxC2)
+                        .addComponent(cbxC3)
+                        .addComponent(cbxC4)
+                        .addComponent(cbxC5)
+                        .addComponent(cbxC6))
+                    .addComponent(cbxC1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
                 .addComponent(btnProximo2)
                 .addContainerGap())
         );
@@ -218,11 +339,16 @@ public class IfrVendaBalcao extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Total");
 
-        lblcpf.setText("CPF");
-
         jLabel6.setText("Pagamento");
 
         btnFinalizar.setText("Finalizar");
+        btnFinalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinalizarActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Email");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -230,32 +356,32 @@ public class IfrVendaBalcao extends javax.swing.JInternalFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tfdTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                                .addGap(36, 36, 36)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel6)
-                                            .addComponent(lblcpf))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(ffdCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                                .addComponent(tfdPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(tfdDesPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                        .addGap(0, 30, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnFinalizar)))
+                        .addComponent(btnFinalizar))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel5)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(tfdTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                                    .addGap(36, 36, 36)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel4))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(tfdPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(tfdDesPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(tfdEmail))))
+                        .addGap(0, 30, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -269,13 +395,13 @@ public class IfrVendaBalcao extends javax.swing.JInternalFrame {
                     .addComponent(jLabel5))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblcpf)
-                    .addComponent(ffdCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(tfdPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfdDesPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(tfdEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addComponent(btnFinalizar)
                 .addContainerGap())
@@ -284,8 +410,18 @@ public class IfrVendaBalcao extends javax.swing.JInternalFrame {
         jTabbedPane1.addTab("Finalização", jPanel3);
 
         btnFechar.setText("Fechar");
+        btnFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         btnConsultar.setText("Consultar");
         btnConsultar.addActionListener(new java.awt.event.ActionListener() {
@@ -298,14 +434,16 @@ public class IfrVendaBalcao extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnConsultar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnCancelar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnFechar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnConsultar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnCancelar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnFechar))
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -330,12 +468,12 @@ public class IfrVendaBalcao extends javax.swing.JInternalFrame {
         if (consulta == "Filme") {
             tfdFilme.setText(String.valueOf(consultar.retorno));
             tfdFilme.setEnabled(true);
-            tfdSala.requestFocus();
+            tfdFilme.requestFocus();
         }
         if (consulta == "Sessão") {
-            tfdSala.setText(String.valueOf(consultar.retorno));
-            tfdSala.setEnabled(true);
-            btnProximo1.requestFocus();
+            tfdSessao.setText(String.valueOf(consultar.retorno));
+            tfdSessao.setEnabled(true);
+            tfdSessao.requestFocus();
         }
     }//GEN-LAST:event_btnConsultarActionPerformed
 
@@ -348,17 +486,325 @@ public class IfrVendaBalcao extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tfdSessaoFocusGained
 
     private void tfdSessaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfdSessaoFocusLost
-        // 
+        if (!tfdSessao.getText().isEmpty()) {
+            Sessao sessao = daoSessao.consultaId(Integer.parseInt(tfdSessao.getText()));
+            tfdData.setText(sessao.getData().toString());
+            tfdHorario.setText(sessao.getHorario().toString());
+            Sala sala = daoSala.consultaId(sessao.getSala());
+            tfdSala.setText(sala.getDescricao());
+            sessaoSelec = sessao;
+            btnProximo1.requestFocus();
+        }
     }//GEN-LAST:event_tfdSessaoFocusLost
 
     private void tfdFilmeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfdFilmeFocusLost
         if (!tfdFilme.getText().isEmpty()) {
-            Filme filme = daoFilme.consultaId(Integer.parseInt(tfdFilme.getText()));       
-            tfdFilme.setText(filme.getNome());
+            Filme filme = daoFilme.consultaId(Integer.parseInt(tfdFilme.getText()));
+            tfdNomeFilme.setText(filme.getNome());
+            filmeSelec = filme;
             tfdSessao.requestFocus();
         }
     }//GEN-LAST:event_tfdFilmeFocusLost
 
+    private void btnProximo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProximo1ActionPerformed
+        List<Ingresso> resultado = new ArrayList();
+        resultado = daoIngresso.consultaSessao(tfdSessao.getText());
+        for (int i = 0; i < resultado.size(); i++) {
+            Ingresso ingresso = resultado.get(i);
+            Poltrona poltrona = new Poltrona();
+            poltrona = daoPoltrona.consultaId(ingresso.getPoltrona());
+            marcaPoltrona(poltrona);
+        }
+        jTabbedPane1.setSelectedIndex(1);
+    }//GEN-LAST:event_btnProximo1ActionPerformed
+
+    private void btnProximo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProximo2ActionPerformed
+        ingressos.removeAll(ingressos);
+        if (cbxA1.isSelected()) {
+            Ingresso ingresso = new Ingresso();
+            Poltrona p = daoPoltrona.consultaFN("A", 1);
+            ingresso.setPoltrona(p.getCodigo());
+            ingresso.setSessao(sessaoSelec.getCodigo());
+            ingresso.setValor(sessaoSelec.getValor());
+            ingressos.add(ingresso);
+        }
+        if (cbxA2.isSelected()) {
+            Ingresso ingresso = new Ingresso();
+            Poltrona p = daoPoltrona.consultaFN("A", 2);
+            ingresso.setPoltrona(p.getCodigo());
+            ingresso.setSessao(sessaoSelec.getCodigo());
+            ingresso.setValor(sessaoSelec.getValor());
+            ingressos.add(ingresso);
+        }
+        if (cbxA3.isSelected()) {
+            Ingresso ingresso = new Ingresso();
+            Poltrona p = daoPoltrona.consultaFN("A", 3);
+            ingresso.setPoltrona(p.getCodigo());
+            ingresso.setSessao(sessaoSelec.getCodigo());
+            ingresso.setValor(sessaoSelec.getValor());
+            ingressos.add(ingresso);
+        }
+        if (cbxA4.isSelected()) {
+            Ingresso ingresso = new Ingresso();
+            Poltrona p = daoPoltrona.consultaFN("A", 4);
+            ingresso.setPoltrona(p.getCodigo());
+            ingresso.setSessao(sessaoSelec.getCodigo());
+            ingresso.setValor(sessaoSelec.getValor());
+            ingressos.add(ingresso);
+        }
+        if (cbxA5.isSelected()) {
+            Ingresso ingresso = new Ingresso();
+            Poltrona p = daoPoltrona.consultaFN("A", 5);
+            ingresso.setPoltrona(p.getCodigo());
+            ingresso.setSessao(sessaoSelec.getCodigo());
+            ingresso.setValor(sessaoSelec.getValor());
+            ingressos.add(ingresso);
+        }
+        if (cbxA6.isSelected()) {
+            Ingresso ingresso = new Ingresso();
+            Poltrona p = daoPoltrona.consultaFN("A", 6);
+            ingresso.setPoltrona(p.getCodigo());
+            ingresso.setSessao(sessaoSelec.getCodigo());
+            ingresso.setValor(sessaoSelec.getValor());
+            ingressos.add(ingresso);
+        }
+        if (cbxB1.isSelected()) {
+            Ingresso ingresso = new Ingresso();
+            Poltrona p = daoPoltrona.consultaFN("B", 1);
+            ingresso.setPoltrona(p.getCodigo());
+            ingresso.setSessao(sessaoSelec.getCodigo());
+            ingresso.setValor(sessaoSelec.getValor());
+            ingressos.add(ingresso);
+        }
+        if (cbxB2.isSelected()) {
+            Ingresso ingresso = new Ingresso();
+            Poltrona p = daoPoltrona.consultaFN("B", 2);
+            ingresso.setPoltrona(p.getCodigo());
+            ingresso.setSessao(sessaoSelec.getCodigo());
+            ingresso.setValor(sessaoSelec.getValor());
+            ingressos.add(ingresso);
+        }
+        if (cbxB3.isSelected()) {
+            Ingresso ingresso = new Ingresso();
+            Poltrona p = daoPoltrona.consultaFN("B", 3);
+            ingresso.setPoltrona(p.getCodigo());
+            ingresso.setSessao(sessaoSelec.getCodigo());
+            ingresso.setValor(sessaoSelec.getValor());
+            ingressos.add(ingresso);
+        }
+        if (cbxB4.isSelected()) {
+            Ingresso ingresso = new Ingresso();
+            Poltrona p = daoPoltrona.consultaFN("B", 4);
+            ingresso.setPoltrona(p.getCodigo());
+            ingresso.setSessao(sessaoSelec.getCodigo());
+            ingresso.setValor(sessaoSelec.getValor());
+            ingressos.add(ingresso);
+        }
+        if (cbxB5.isSelected()) {
+            Ingresso ingresso = new Ingresso();
+            Poltrona p = daoPoltrona.consultaFN("B", 5);
+            ingresso.setPoltrona(p.getCodigo());
+            ingresso.setSessao(sessaoSelec.getCodigo());
+            ingresso.setValor(sessaoSelec.getValor());
+            ingressos.add(ingresso);
+        }
+        if (cbxB6.isSelected()) {
+            Ingresso ingresso = new Ingresso();
+            Poltrona p = daoPoltrona.consultaFN("B", 6);
+            ingresso.setPoltrona(p.getCodigo());
+            ingresso.setSessao(sessaoSelec.getCodigo());
+            ingresso.setValor(sessaoSelec.getValor());
+            ingressos.add(ingresso);
+        }
+        if (cbxC1.isSelected()) {
+            Ingresso ingresso = new Ingresso();
+            Poltrona p = daoPoltrona.consultaFN("C", 1);
+            ingresso.setPoltrona(p.getCodigo());
+            ingresso.setSessao(sessaoSelec.getCodigo());
+            ingresso.setValor(sessaoSelec.getValor());
+            ingressos.add(ingresso);
+        }
+        if (cbxC2.isSelected()) {
+            Ingresso ingresso = new Ingresso();
+            Poltrona p = daoPoltrona.consultaFN("C", 2);
+            ingresso.setPoltrona(p.getCodigo());
+            ingresso.setSessao(sessaoSelec.getCodigo());
+            ingresso.setValor(sessaoSelec.getValor());
+            ingressos.add(ingresso);
+        }
+        if (cbxC3.isSelected()) {
+            Ingresso ingresso = new Ingresso();
+            Poltrona p = daoPoltrona.consultaFN("C", 3);
+            ingresso.setPoltrona(p.getCodigo());
+            ingresso.setSessao(sessaoSelec.getCodigo());
+            ingresso.setValor(sessaoSelec.getValor());
+            ingressos.add(ingresso);
+        }
+        if (cbxC4.isSelected()) {
+            Ingresso ingresso = new Ingresso();
+            Poltrona p = daoPoltrona.consultaFN("C", 4);
+            ingresso.setPoltrona(p.getCodigo());
+            ingresso.setSessao(sessaoSelec.getCodigo());
+            ingresso.setValor(sessaoSelec.getValor());
+            ingressos.add(ingresso);
+        }
+        if (cbxC5.isSelected()) {
+            Ingresso ingresso = new Ingresso();
+            Poltrona p = daoPoltrona.consultaFN("C", 5);
+            ingresso.setPoltrona(p.getCodigo());
+            ingresso.setSessao(sessaoSelec.getCodigo());
+            ingresso.setValor(sessaoSelec.getValor());
+            ingressos.add(ingresso);
+        }
+        if (cbxC6.isSelected()) {
+            Ingresso ingresso = new Ingresso();
+            Poltrona p = daoPoltrona.consultaFN("C", 6);
+            ingresso.setPoltrona(p.getCodigo());
+            ingresso.setSessao(sessaoSelec.getCodigo());
+            ingresso.setValor(sessaoSelec.getValor());
+            ingressos.add(ingresso);
+        }
+
+        tblPoltronas.getColumnModel().getColumn(0).setPreferredWidth(90);
+        tblPoltronas.getColumnModel().getColumn(1).setPreferredWidth(60);
+        tblPoltronas.getColumnModel().getColumn(2).setPreferredWidth(40);
+        DefaultTableModel modelo = (DefaultTableModel) tblPoltronas.getModel();
+        modelo.setNumRows(0);
+        for (int i = 0; i < ingressos.size(); i++) {
+            Ingresso ingresso = ingressos.get(i);
+            Poltrona p = daoPoltrona.consultaId(ingresso.getPoltrona());
+            modelo.addRow(new Object[]{filmeSelec.getNome(), (p.getFileira() + "" + p.getNumero())});
+            valor = valor + sessaoSelec.getValor();
+        }
+        tfdTotal.setText(String.valueOf(valor));
+        jTabbedPane1.setSelectedIndex(2);
+    }//GEN-LAST:event_btnProximo2ActionPerformed
+
+    private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
+        try {
+            Venda venda = new Venda();
+            venda.setData(Formatacao.dataParaCalendario(Formatacao.getDataAtual()));
+            venda.setUsuario(1);
+            venda.setTotal(valor);
+            DaoGenerico.getInstance().insert(venda);
+            for (int i = 0; i < ingressos.size(); i++) {
+                Ingresso ingresso = ingressos.get(i);
+                ingresso.setVenda(venda.getCodigo());
+                DaoGenerico.getInstance().insert(ingresso);
+            }
+            JOptionPane.showMessageDialog(null, "Vendas finalizadas com sucesso!");
+            apoio.MandaEmail.email(tfdEmail.getText());
+        } catch (HibernateException hibEx) {
+            hibEx.printStackTrace();
+        } catch (MessagingException ex) {
+            java.util.logging.Logger.getLogger(IfrVendaBalcao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        btnCancelarActionPerformed(evt);
+
+    }//GEN-LAST:event_btnFinalizarActionPerformed
+
+    private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnFecharActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        tfdData.setText("");
+        tfdFilme.setText("");
+        tfdHorario.setText("");
+        tfdNomeFilme.setText("");
+        tfdPagamento.setText("");
+        tfdDesPagamento.setText("");
+        tfdSala.setText("");
+        tfdSessao.setText("");
+        tfdTotal.setText("");
+        cbxA1.setSelected(false);
+        cbxA1.setEnabled(true);
+        cbxA2.setSelected(false);
+        cbxA2.setEnabled(true);
+        cbxA3.setSelected(false);
+        cbxA3.setEnabled(true);
+        cbxA4.setSelected(false);
+        cbxA4.setEnabled(true);
+        cbxA5.setSelected(false);
+        cbxA5.setEnabled(true);
+        cbxA6.setSelected(false);
+        cbxA6.setEnabled(true);
+        cbxB1.setSelected(false);
+        cbxB1.setEnabled(true);
+        cbxB2.setSelected(false);
+        cbxB2.setEnabled(true);
+        cbxB3.setSelected(false);
+        cbxB3.setEnabled(true);
+        cbxB4.setSelected(false);
+        cbxB4.setEnabled(true);
+        cbxB5.setSelected(false);
+        cbxB5.setEnabled(true);
+        cbxB6.setSelected(false);
+        cbxB6.setEnabled(true);
+        cbxC1.setSelected(false);
+        cbxC1.setEnabled(true);
+        cbxC2.setSelected(false);
+        cbxC2.setEnabled(true);
+        cbxC3.setSelected(false);
+        cbxC3.setEnabled(true);
+        cbxC4.setSelected(false);
+        cbxC4.setEnabled(true);
+        cbxC5.setSelected(false);
+        cbxC5.setEnabled(true);
+        cbxC6.setSelected(false);
+        cbxC6.setEnabled(true);
+        jTabbedPane1.setSelectedIndex(0);
+        ingressos.removeAll(ingressos);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void marcaPoltrona(Poltrona poltrona) {
+        String fileira = poltrona.getFileira();
+        int numero = poltrona.getNumero();
+
+        if ("A".equals(fileira)) {
+            if (numero == 1) {
+                cbxA1.setEnabled(false);
+            } else if (numero == 2) {
+                cbxA2.setEnabled(false);
+            } else if (numero == 3) {
+                cbxA3.setEnabled(false);
+            } else if (numero == 4) {
+                cbxA4.setEnabled(false);
+            } else if (numero == 5) {
+                cbxA5.setEnabled(false);
+            } else if (numero == 6) {
+                cbxA6.setEnabled(false);
+            }
+        } else if ("B".equals(fileira)) {
+            if (numero == 1) {
+                cbxB1.setEnabled(false);
+            } else if (numero == 2) {
+                cbxB2.setEnabled(false);
+            } else if (numero == 3) {
+                cbxB3.setEnabled(false);
+            } else if (numero == 4) {
+                cbxB4.setEnabled(false);
+            } else if (numero == 5) {
+                cbxB5.setEnabled(false);
+            } else if (numero == 6) {
+                cbxB6.setEnabled(false);
+            }
+        } else if ("C".equals(fileira)) {
+            if (numero == 1) {
+                cbxC1.setEnabled(false);
+            } else if (numero == 2) {
+                cbxC2.setEnabled(false);
+            } else if (numero == 3) {
+                cbxC3.setEnabled(false);
+            } else if (numero == 4) {
+                cbxC4.setEnabled(false);
+            } else if (numero == 5) {
+                cbxC5.setEnabled(false);
+            } else if (numero == 6) {
+                cbxC6.setEnabled(false);
+            }
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
@@ -367,10 +813,25 @@ public class IfrVendaBalcao extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnFinalizar;
     private javax.swing.JButton btnProximo1;
     private javax.swing.JButton btnProximo2;
-    private javax.swing.JFormattedTextField ffdCpf;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
+    private javax.swing.JCheckBox cbxA1;
+    private javax.swing.JCheckBox cbxA2;
+    private javax.swing.JCheckBox cbxA3;
+    private javax.swing.JCheckBox cbxA4;
+    private javax.swing.JCheckBox cbxA5;
+    private javax.swing.JCheckBox cbxA6;
+    private javax.swing.JCheckBox cbxB1;
+    private javax.swing.JCheckBox cbxB2;
+    private javax.swing.JCheckBox cbxB3;
+    private javax.swing.JCheckBox cbxB4;
+    private javax.swing.JCheckBox cbxB5;
+    private javax.swing.JCheckBox cbxB6;
+    private javax.swing.JCheckBox cbxC1;
+    private javax.swing.JCheckBox cbxC2;
+    private javax.swing.JCheckBox cbxC3;
+    private javax.swing.JCheckBox cbxC4;
+    private javax.swing.JCheckBox cbxC5;
+    private javax.swing.JCheckBox cbxC6;
+    private javax.swing.JCheckBox jCheckBox6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -382,10 +843,10 @@ public class IfrVendaBalcao extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JLabel lblcpf;
     private javax.swing.JTable tblPoltronas;
     private javax.swing.JFormattedTextField tfdData;
     private javax.swing.JTextField tfdDesPagamento;
+    private javax.swing.JTextField tfdEmail;
     private javax.swing.JTextField tfdFilme;
     private javax.swing.JTextField tfdHorario;
     private javax.swing.JTextField tfdNomeFilme;

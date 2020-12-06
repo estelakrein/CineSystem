@@ -5,6 +5,7 @@
  */
 package entidades;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.GregorianCalendar;
 import javax.persistence.Column;
@@ -22,7 +23,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "sessao")
 
-public class Sessao {
+public class Sessao implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

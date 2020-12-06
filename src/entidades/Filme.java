@@ -32,13 +32,13 @@ public class Filme implements Serializable {
     @Column(name = "duracao")
     private int duracao;
     @Column(name = "codCategoria")
-    private Categoria categoria;
+    private int categoria;
     @Column(name = "codIdioma")
-    private Idioma idioma;
+    private int idioma;
     @Column(name = "codClassificacao")
-    private Classificacao classificacao;
+    private int classificacao;
     @Column(name = "codLegenda")
-    private Legenda legenda;
+    private int legenda;
     @Column(name = "valor")
     private double valor;
 
@@ -51,7 +51,7 @@ public class Filme implements Serializable {
 
     @Override
     public String toString(){
-        return this.nome;
+        return this.getNome();
     }
                 
     /**
@@ -90,62 +90,6 @@ public class Filme implements Serializable {
     }
 
     /**
-     * @return the categoria
-     */
-    public Categoria getCategoria() {
-        return categoria;
-    }
-
-    /**
-     * @param categoria the categoria to set
-     */
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
-    }
-
-    /**
-     * @return the idioma
-     */
-    public Idioma getIdioma() {
-        return idioma;
-    }
-
-    /**
-     * @param idioma the idioma to set
-     */
-    public void setIdioma(Idioma idioma) {
-        this.idioma = idioma;
-    }
-
-    /**
-     * @return the classificacao
-     */
-    public Classificacao getClassificacao() {
-        return classificacao;
-    }
-
-    /**
-     * @param classificacao the classificacao to set
-     */
-    public void setClassificacao(Classificacao classificacao) {
-        this.classificacao = classificacao;
-    }
-
-    /**
-     * @return the legenda
-     */
-    public Legenda getLegenda() {
-        return legenda;
-    }
-
-    /**
-     * @param legenda the legenda to set
-     */
-    public void setLegenda(Legenda legenda) {
-        this.legenda = legenda;
-    }
-
-    /**
      * @return the valor
      */
     public double getValor() {
@@ -157,6 +101,62 @@ public class Filme implements Serializable {
      */
     public void setValor(double valor) {
         this.valor = valor;
+    }
+
+    /**
+     * @param categoria the categoria to set
+     */
+    public void setCategoria(int categoria) {
+        this.categoria = categoria;
+    }
+
+    /**
+     * @param idioma the idioma to set
+     */
+    public void setIdioma(int idioma) {
+        this.idioma = idioma;
+    }
+
+    /**
+     * @param classificacao the classificacao to set
+     */
+    public void setClassificacao(int classificacao) {
+        this.classificacao = classificacao;
+    }
+
+    /**
+     * @param legenda the legenda to set
+     */
+    public void setLegenda(int legenda) {
+        this.legenda = legenda;
+    }
+
+    /**
+     * @return the categoria
+     */
+    public int getCategoria() {
+        return categoria;
+    }
+
+    /**
+     * @return the idioma
+     */
+    public int getIdioma() {
+        return idioma;
+    }
+
+    /**
+     * @return the classificacao
+     */
+    public int getClassificacao() {
+        return classificacao;
+    }
+
+    /**
+     * @return the legenda
+     */
+    public int getLegenda() {
+        return legenda;
     }
          
 }
