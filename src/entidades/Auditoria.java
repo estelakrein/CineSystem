@@ -135,7 +135,7 @@ public class Auditoria implements Serializable {
     private String acao;
     @Column(name = "usuario")
     private String usuario; 
-    @Column(name = "new_cpfCliente")
+    @Column(name = "hora")
     private Timestamp hora;
  
 
