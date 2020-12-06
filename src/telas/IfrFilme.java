@@ -19,14 +19,15 @@ import entidades.Idioma;
 import entidades.Legenda;
 import entidades.Filme;
 import java.awt.Color;
+import java.time.LocalDateTime;
 import javax.swing.JComboBox;
+import org.apache.log4j.Logger;
 
-/**
- *
- * @author Acer
- */
 public class IfrFilme extends javax.swing.JInternalFrame {
 
+    private org.apache.log4j.Logger logger = Logger.getLogger(IfrFilme.class.getName());
+    LocalDateTime agora = LocalDateTime.now();
+    
     int codigo = 0;
     String consulta = "";
     DaoCategoria daoCategoria = new DaoCategoria();
@@ -72,6 +73,7 @@ public class IfrFilme extends javax.swing.JInternalFrame {
             }
         } catch (HibernateException hibEx) {
             hibEx.printStackTrace();
+            logger.error(agora+" ERROR: Erro ao preencher tabela! --  Tela de Cadastro de Filmes");
         }
 
         // permite seleção de apenas uma linha da tabela
@@ -473,6 +475,7 @@ public class IfrFilme extends javax.swing.JInternalFrame {
             inicia();
         } catch (HibernateException hibEx) {
             hibEx.printStackTrace();
+            logger.error(agora+" ERROR: Erro ao salvar dados! --  Tela de Cadastro de Filmes");
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -528,6 +531,7 @@ public class IfrFilme extends javax.swing.JInternalFrame {
             }
         } catch (HibernateException hibEx) {
             hibEx.printStackTrace();
+            logger.error(agora+" ERROR: Erro ao buscar dados! --  Tela de Cadastro de Filmes");
         }
 
         // permite seleção de apenas uma linha da tabela

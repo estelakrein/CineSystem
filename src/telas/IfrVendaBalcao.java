@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package telas;
 
 import apoio.Formatacao;
@@ -28,13 +23,13 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.apache.log4j.Logger;
 
-/**
- *
- * @author estel
- */
 public class IfrVendaBalcao extends javax.swing.JInternalFrame {
 
+    private org.apache.log4j.Logger logger = Logger.getLogger(IfrVendaBalcao.class.getName());
+    LocalDateTime agora = LocalDateTime.now();
+    
     public String consulta = "";
     DaoFilme daoFilme = new DaoFilme();
     DaoSessao daoSessao = new DaoSessao();

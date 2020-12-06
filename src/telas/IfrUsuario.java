@@ -1,26 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package telas;
 
 import daos.DaoGenerico;
 import daos.DaoUsuario;
 import entidades.Usuario;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.apache.log4j.Logger;
 
-/**
- *
- * @author estel
- */
 public class IfrUsuario extends javax.swing.JInternalFrame {
 
+    private org.apache.log4j.Logger logger = Logger.getLogger(IfrUsuario.class.getName());
+    LocalDateTime agora = LocalDateTime.now();
+    
     int codigo = 0;
 
     /**
@@ -57,6 +53,7 @@ public class IfrUsuario extends javax.swing.JInternalFrame {
             }
         } catch (HibernateException hibEx) {
             hibEx.printStackTrace();
+            logger.error(agora+" ERROR: Erro ao preencher tabela! --  Tela de Cadastro de Usuário");
         }
 
         // permite seleção de apenas uma linha da tabela
@@ -264,6 +261,7 @@ public class IfrUsuario extends javax.swing.JInternalFrame {
             inicia();
         } catch (HibernateException hibEx) {
             hibEx.printStackTrace();
+            logger.error(agora+" ERROR: Erro ao salavr dados! --  Tela de Cadastro de Usuário");
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 

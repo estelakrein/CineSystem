@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package daos;
 
 import entidades.Usuario;
 import java.security.MessageDigest;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -15,12 +11,13 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import telas.HibernateUtil;
+import org.apache.log4j.Logger;
+import telas.FrmLogin;
 
-/**
- *
- * @author estel
- */
 public class DaoUsuario {
+    
+    private org.apache.log4j.Logger logger = Logger.getLogger(DaoUsuario.class.getName());
+    LocalDateTime agora = LocalDateTime.now();
     
     public void consulta(Usuario usuario, String nome, String senha) {
         try {
@@ -41,6 +38,7 @@ public class DaoUsuario {
                 
             } catch (HibernateException hibEx) {
                 hibEx.printStackTrace();
+                logger.error(agora+" ERROR: Consulta inválida! --  Tela Dao-Usuário");
             }
         } catch (Exception e) {
             System.out.println("Erro ao consultar usuário: " + e);
@@ -56,7 +54,9 @@ public class DaoUsuario {
             byte[] digest = md.digest();
             hash = DatatypeConverter.printHexBinary(digest).toUpperCase();
             return hash;
-        } catch (Exception e) {
+        } catch (Exception hibEx) {
+            hibEx.printStackTrace();
+            logger.error(agora+" ERROR: Consulta inválida! --  Tela Dao-Usuário");
             return null;
         }
     }
@@ -78,6 +78,7 @@ public class DaoUsuario {
             }
         } catch (HibernateException hibEx) {
             hibEx.printStackTrace();
+            //DaoUsuario.logger.error("Erro no registro" + hibEx.toString());
         }
     }
 }

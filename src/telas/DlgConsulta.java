@@ -19,18 +19,19 @@ import entidades.Idioma;
 import entidades.Legenda;
 import entidades.Sala;
 import entidades.Sessao;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.apache.log4j.Logger;
 
-/**
- *
- * @author estel
- */
 public class DlgConsulta extends javax.swing.JDialog {
 
+    private org.apache.log4j.Logger logger = Logger.getLogger(DlgConsulta.class.getName());
+    LocalDateTime agora = LocalDateTime.now();
+    
     public String tabela;
     public int retorno = -1;
 
@@ -159,6 +160,7 @@ public class DlgConsulta extends javax.swing.JDialog {
                 }
             } catch (HibernateException hibEx) {
                 hibEx.printStackTrace();
+                logger.error(agora+" ERROR: Erro ao consutar a tabela: Filmes! --  Tela de Consulta");
             }
         }
         if (tabela == "Sala") {
@@ -177,6 +179,7 @@ public class DlgConsulta extends javax.swing.JDialog {
                 }
             } catch (HibernateException hibEx) {
                 hibEx.printStackTrace();
+                logger.error(agora+" ERROR: Erro ao consutar a tabela: Sala! --  Tela de Consulta");
             }
         }
         if (tabela == "Idioma") {
@@ -195,6 +198,7 @@ public class DlgConsulta extends javax.swing.JDialog {
                 }
             } catch (HibernateException hibEx) {
                 hibEx.printStackTrace();
+                logger.error(agora+" ERROR: Erro ao consutar a tabela: Idioma! --  Tela de Consulta");
             }
         }
         if (tabela == "Categoria") {
@@ -213,6 +217,7 @@ public class DlgConsulta extends javax.swing.JDialog {
                 }
             } catch (HibernateException hibEx) {
                 hibEx.printStackTrace();
+                logger.error(agora+" ERROR: Erro ao consutar a tabela: Categoria! --  Tela de Consulta");
             }
         }
         if (tabela == "Legenda") {
@@ -231,6 +236,7 @@ public class DlgConsulta extends javax.swing.JDialog {
                 }
             } catch (HibernateException hibEx) {
                 hibEx.printStackTrace();
+                logger.error(agora+" ERROR: Erro ao consutar a tabela: Legenda! --  Tela de Consulta");
             }
         }
         if (tabela == "Classificacao") {
@@ -249,6 +255,7 @@ public class DlgConsulta extends javax.swing.JDialog {
                 }
             } catch (HibernateException hibEx) {
                 hibEx.printStackTrace();
+                logger.error(agora+" ERROR: Erro ao consutar a tabela: Classificação! --  Tela de Consulta");
             }
         }
         if (tabela == "Sessao") {
