@@ -34,15 +34,15 @@ public class MandaEmail {
     public static void email(String rec) throws MessagingException {
                 System.out.println("preparando para enviar email");
 
-		String user = "estelakrein@hotmail.com";
-		String password = "e101198";
+		String user = "sistemascinesystem@gmail.com";
+		String password = "cine1234";
                 String fileName = "C:\\CineSystem\\comprovantes\\comp.pdf";
 
 		Properties properties = new Properties();
 		properties.put("mail.smtp.auth", "true");
 		properties.put("mail.smtp.starttls.enable", "true");
-		properties.put("mail.smtp.host", "smtp.live.com");
-		properties.put("mail.smtp.port", "25");  //ou 465
+		properties.put("mail.smtp.host", "smtp.gmail.com");
+		properties.put("mail.smtp.port", "465");  
 
 		Session session = Session.getInstance(properties, new Authenticator() {
                         @Override
