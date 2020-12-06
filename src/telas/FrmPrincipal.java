@@ -75,8 +75,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem14 = new javax.swing.JMenuItem();
-        jMenuItem15 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
@@ -218,17 +216,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem7);
 
-        jMenuItem14.setText("jMenuItem14");
-        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem14ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuItem14);
-
-        jMenuItem15.setText("jMenuItem15");
-        jMenu3.add(jMenuItem15);
-
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Relatórios");
@@ -305,12 +292,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         ifrClassificacao.setVisible(true); 
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        IfrAuditoria ifrAuditoria = new IfrAuditoria();
-        jDesktopPane1.add(ifrAuditoria);
-        ifrAuditoria.setVisible(true);     
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
-
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         IfrSala ifrSala = new IfrSala();
         jDesktopPane1.add(ifrSala);
@@ -365,6 +346,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+<<<<<<< HEAD
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
 //        IfrLog ifrLog = new IfrLog();
 //        jDesktopPane1.add(ifrLog);
@@ -380,6 +362,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
+=======
+>>>>>>> 74bc9bb7b3b71e210bc7528af4dcd3a2b6a5ed71
     private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
         try {
             // Compila o relatorio
@@ -398,6 +382,18 @@ public class FrmPrincipal extends javax.swing.JFrame {
             logger.error(agora+" ERROR: Erro ao gerar relatório de Auditoria! --  Tela Principal");
         }
     }//GEN-LAST:event_jMenuItem17ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        IfrLog ifrLog = new IfrLog();
+        jDesktopPane1.add(ifrLog);
+        ifrLog.setVisible(true);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        IfrAuditoria ifrAuditoria = new IfrAuditoria();
+        jDesktopPane1.add(ifrAuditoria);
+        ifrAuditoria.setVisible(true);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -447,8 +443,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem14;
-    private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem2;
