@@ -32,7 +32,7 @@ public class Sessao implements Serializable{
     private int codigo;
     @Column(name = "horario")
     private GregorianCalendar horario;
-    @Column(name = "data")
+    @Column(name = "dia")
     private GregorianCalendar data;
     @Column(name = "valor")
     private double valor;
