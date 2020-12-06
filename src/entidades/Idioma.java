@@ -28,7 +28,7 @@ public class Idioma implements Serializable{
     
     @Column(name = "codigo")
     private int codigo;
-    @Column(name = "idioma")
+    @Column(name = "descricao")
     private String idioma;
 
  
